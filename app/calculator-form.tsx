@@ -103,13 +103,22 @@ export default function CalculatorForm() {
       {validation.valid && result ? (
         <dl className="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
           <div className="flex justify-between">
-            <dt>Hours left</dt><dd>{result.hoursLeft.toFixed(2)}</dd>
+            <dt>Hours before ferns acquired</dt><dd>{result.hoursLeft.toFixed(2)}</dd>
           </div>
           <div className="flex justify-between">
             <dt>Hours before reset</dt><dd>{result.hoursBeforeReset.toFixed(2)}</dd>
           </div>
           <div className="flex justify-between font-semibold text-amber-600 dark:text-amber-400">
-            <dt>Ready</dt><dd>{result.readyRelation} reset</dd>
+            <dt>Ready</dt>
+            <dd
+              className={`text-base font-black ${
+                result.readyRelation === 'After'
+                  ? 'text-red-600 dark:text-red-400'
+                  : 'text-green-600 dark:text-green-400'
+              }`}
+            >
+              {result.readyRelation} reset
+            </dd>
           </div>
         </dl>
       ) : (

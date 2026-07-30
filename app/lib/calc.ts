@@ -27,7 +27,7 @@ export interface CalcResult {
   nextResetAt: Date;
   hoursBeforeReset: number;
   resetOffset: number;
-  readyRelation: 'before' | 'after';
+  readyRelation: 'Before' | 'After';
 }
 
 export function calculate({ rate, amount, needed, now = new Date() }: CalcInput): CalcResult {
@@ -43,7 +43,7 @@ export function calculate({ rate, amount, needed, now = new Date() }: CalcInput)
     nextResetAt,
     hoursBeforeReset,
     resetOffset,
-    readyRelation: resetOffset < 0 ? 'after' : 'before',
+    readyRelation: resetOffset < 0 ? 'After' : 'Before',
   };
 }
 
