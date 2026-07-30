@@ -1,0 +1,19 @@
+import type { Translations } from './types';
+
+const zhCN: Translations = {
+  appTitle: 'Last Z 蕨叶计算器',
+  appDescription: '计算距离重置的时间,以及达到目标蕨叶数量所需的时间。',
+  loading: '加载中…',
+  rateLabel: '每小时蕨叶数',
+  amountLabel: '库存蕨叶数',
+  neededLabel: '下次升级所需的蕨叶总数',
+  hoursLeftLabel: '获得蕨叶所需时间',
+  hoursBeforeResetLabel: '距离重置的时间',
+  readyLabel: '状态',
+  readyBefore: '重置前',
+  readyAfter: '重置后',
+  rateError: '请输入大于 0 的数值。',
+  languageLabel: '语言',
+};
+
+export default zhCN;
