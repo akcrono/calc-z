@@ -27,7 +27,7 @@ export interface CalcResult {
   nextResetAt: Date;
   hoursBeforeReset: number;
   resetOffset: number;
-  readyRelation: 'Before' | 'After';
+  readyRelation: 'before' | 'after';
 }
 
 export function calculate({ rate, amount, needed, now = new Date() }: CalcInput): CalcResult {
@@ -43,18 +43,18 @@ export function calculate({ rate, amount, needed, now = new Date() }: CalcInput)
     nextResetAt,
     hoursBeforeReset,
     resetOffset,
-    readyRelation: resetOffset < 0 ? 'After' : 'Before',
+    readyRelation: resetOffset < 0 ? 'after' : 'before',
   };
 }
 
 export interface ValidationResult {
   valid: boolean;
-  error?: string;
+  error?: 'rate-must-be-positive';
 }
 
 export function validateRate(rate: number): ValidationResult {
   if (!Number.isFinite(rate) || rate <= 0) {
-    return { valid: false, error: 'Enter a rate greater than 0.' };
+    return { valid: false, error: 'rate-must-be-positive' };
   }
   return { valid: true };
 }
