@@ -3,6 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --emblem-grad-a: #fbbf24; /* amber-400 */
+  --emblem-grad-b: #f43f5e; /* rose-500 */
+  --emblem-grad-c: #92400e; /* amber-800 */
 }
 
 @theme inline {
@@ -10,12 +13,67 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --animate-hourglass: hourglass-flip 10s ease-in-out infinite,
+    hourglass-glow 2.5s ease-in-out infinite;
+  --animate-sand-top: sand-drain-top 10s ease-in-out infinite;
+  --animate-sand-bottom: sand-drain-bottom 10s ease-in-out infinite;
+}
+
+/* One full cycle = two flips (0deg -> 180deg -> 360deg, i.e. back to 0deg),
+   so it always spins the same direction and loops with no snap-back. */
+@keyframes hourglass-flip {
+  0%, 45% {
+    transform: rotate(0deg);
+  }
+  50%, 95% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes hourglass-glow {
+  0%, 100% {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 0px currentColor);
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px currentColor);
+  }
+}
+
+/* Sand keyframes are phase-locked to hourglass-flip above: each sand shape
+   is drawn at a fixed local position (top bulb / bottom bulb) and the group
+   rotation (not these) is what moves it to the screen's top or bottom. So
+   "top" here fades out while it's the current screen-top bulb draining, and
+   fills back in while it's the current screen-bottom bulb collecting sand
+   from the other one - always ending full right as the next flip lands it
+   back on top. */
+@keyframes sand-drain-top {
+  0% { opacity: 0.8; }
+  45% { opacity: 0; }
+  50% { opacity: 0; }
+  95% { opacity: 0.8; }
+  100% { opacity: 0.8; }
+}
+
+@keyframes sand-drain-bottom {
+  0% { opacity: 0; }
+  45% { opacity: 0.8; }
+  50% { opacity: 0.8; }
+  95% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --emblem-grad-a: #f59e0b; /* amber-500 */
+    --emblem-grad-b: #e11d48; /* rose-600 */
+    --emblem-grad-c: #78350f; /* amber-900 */
   }
 }
 
