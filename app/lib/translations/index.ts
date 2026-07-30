@@ -27,7 +27,9 @@ export const translations: Record<Locale, Translations> = {
 /** Parses an Accept-Language header and returns the best-matching supported
  * locale: exact tag match first (e.g. `zh-TW`), then a same-language prefix
  * match (e.g. `ja-JP` -> `ja`), falling back to English. Doesn't attempt
- * IANA script subtags (zh-Hans/zh-Hant) - out of scope for 7 fixed locales. */
+ * IANA script subtags (zh-Hans/zh-Hant) - out of scope for 7 fixed locales.
+ * Uses header order, not q-values, to rank preferences — fine since browsers
+ * already emit tags in descending-q order. */
 export function matchLocale(acceptLanguageHeader: string | null): Locale {
   if (!acceptLanguageHeader) return 'en';
 

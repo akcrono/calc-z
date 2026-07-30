@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Geist, Geist_Mono } from "next/font/google";
-import { matchLocale, translations } from "./lib/translations";
+import { translations } from "./lib/translations";
+import { detectLocale } from "./lib/locale-server";
+import { LocaleProvider } from "./lib/locale-context";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,8 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const headersList = await headers();
-  const locale = matchLocale(headersList.get('accept-language'));
+  const locale = await detectLocale();
   return {
     title: translations[locale].appTitle,
     description: translations[locale].appDescription,
@@ -28,15 +28,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const headersList = await headers();
-  const initialLocale = matchLocale(headersList.get('accept-language'));
+  const initialLocale = await detectLocale();
 
   return (
     <html
       lang={initialLocale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>
+      </body>
     </html>
   );
 }

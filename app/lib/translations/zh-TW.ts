@@ -2,7 +2,7 @@ import type { Translations } from './types';
 
 const zhTW: Translations = {
   appTitle: 'Last Z 蕨葉計算機',
-  appDescription: '計算距離重置的時間,以及達到目標蕨葉數量所需的時間。',
+  appDescription: '計算距離重置的時間，以及達到目標蕨葉數量所需的時間。',
   loading: '載入中…',
   rateLabel: '每小時蕨葉數',
   amountLabel: '庫存蕨葉數',

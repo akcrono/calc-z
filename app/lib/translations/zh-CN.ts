@@ -2,7 +2,7 @@ import type { Translations } from './types';
 
 const zhCN: Translations = {
   appTitle: 'Last Z 蕨叶计算器',
-  appDescription: '计算距离重置的时间,以及达到目标蕨叶数量所需的时间。',
+  appDescription: '计算距离重置的时间，以及达到目标蕨叶数量所需的时间。',
   loading: '加载中…',
   rateLabel: '每小时蕨叶数',
   amountLabel: '库存蕨叶数',
