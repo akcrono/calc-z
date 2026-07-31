@@ -305,7 +305,7 @@ const zhTW: GuideSection[] = [
         items: [
           '編隊1和編隊2',
           '集結廣場',
-          '別墅',
+          '別墅(大約升到22級左右)',
           '書店',
           '餐廳',
           '陣營建築升到30級(26-30級有非常不錯的部隊加成)',
@@ -316,6 +316,16 @@ const zhTW: GuideSection[] = [
       {
         type: 'paragraph',
         text: '其他的就不用管了。資源類建築在14級左右之後就不太值得升級了。',
+      },
+    ],
+  },
+  {
+    id: 'where-to-spend-diamonds',
+    title: '鑽石應該花在哪裡？',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: '以上建議適用於商店和每週活動。之後，盡量達到VIP 10；它有幾個重要的福利，包括每日的橙色英雄碎片。',
       },
     ],
   },

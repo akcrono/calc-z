@@ -308,7 +308,7 @@ const it: GuideSection[] = [
         items: [
           'Formazione 1 e formazione 2',
           'Piazza di raduno',
-          'Villa',
+          'Villa (fino al livello 22 circa)',
           'Libreria',
           'Ristorante',
           'Edifici di fazione fino al livello 30 (bonus truppe davvero notevoli dal 26 al 30)',
@@ -319,6 +319,16 @@ const it: GuideSection[] = [
       {
         type: 'paragraph',
         text: 'Non preoccuparti del resto. Gli edifici di risorse semplicemente non ne valgono la pena dopo il livello 14 circa.',
+      },
+    ],
+  },
+  {
+    id: 'where-to-spend-diamonds',
+    title: 'Dove Spendere i Diamanti?',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: "I suggerimenti sopra riguardano i negozi e l'evento settimanale. Dopodiché, cerca di arrivare a VIP 10; offre diversi vantaggi significativi, tra cui un frammento eroe arancione giornaliero.",
       },
     ],
   },

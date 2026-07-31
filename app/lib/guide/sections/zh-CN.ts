@@ -305,7 +305,7 @@ const zhCN: GuideSection[] = [
         items: [
           '编队1和编队2',
           '集结广场',
-          '别墅',
+          '别墅(大约升到22级左右)',
           '书店',
           '餐厅',
           '阵营建筑升到30级(26-30级有非常不错的部队加成)',
@@ -316,6 +316,16 @@ const zhCN: GuideSection[] = [
       {
         type: 'paragraph',
         text: '其他的就不用管了。资源类建筑在14级左右之后就不太值得升级了。',
+      },
+    ],
+  },
+  {
+    id: 'where-to-spend-diamonds',
+    title: '钻石应该花在哪里？',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: '以上建议适用于商店和每周活动。之后，尽量达到VIP 10；它有几个重要的福利，包括每日的橙色英雄碎片。',
       },
     ],
   },

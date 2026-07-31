@@ -7,7 +7,7 @@ const en: GuideSection[] = [
     blocks: [
       {
         type: 'paragraph',
-        text: 'Trucks loot is determined by a % chance based on the number of item slots. S (orange) trucks have 7 item slots, while A (purple) trucks have 6. The first raid of a truck steals 3 items (both A and S). The second raid of an S truck steals 2 items, while the second raid of an A truck steals one. Therefore, you are more likely to get a hero fragment from a 2 fragment A truck (3/6 odds) than a 2 fragment S (3/7 odds) truck on the first raid.',
+        text: 'Trucks loot is determined by a % chance based on the number of item slots. S (orange) trucks have 7 item slots, while A (purple) trucks have 6. The first raid of a truck steals 3 items (both A and S). The second raid of an S truck steals 2 items, while the second raid of an A truck steals one. Therefore, you are more likely to get a hero fragment from a 2 fragment A truck (3/6 odds) than a 2 fragment S truck (3/7 odds) on the first raid.',
       },
       { type: 'paragraph', text: 'Tips:' },
       {
@@ -305,7 +305,7 @@ const en: GuideSection[] = [
         items: [
           'Formation 1 and formation 2',
           'Rally square',
-          'Villa',
+          'Villa (to around 22 or so)',
           'Bookstore',
           'Restaurant',
           'Faction buildings to 30 (really nice troop bonuses from 26-30)',
@@ -316,6 +316,16 @@ const en: GuideSection[] = [
       {
         type: 'paragraph',
         text: 'Don’t bother with the rest. Resource buildings are just not worth it after 14 or so.',
+      },
+    ],
+  },
+  {
+    id: 'where-to-spend-diamonds',
+    title: 'Where to Spend Diamonds?',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'Above suggestions for shops and weekly event. After that, try to get to VIP 10; several significant benefits including daily orange hero shard.',
       },
     ],
   },

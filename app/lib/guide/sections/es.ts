@@ -308,7 +308,7 @@ const es: GuideSection[] = [
         items: [
           'Formación 1 y formación 2',
           'Plaza de reunión',
-          'Villa',
+          'Villa (hasta el nivel 22 aproximadamente)',
           'Librería',
           'Restaurante',
           'Edificios de facción hasta el nivel 30 (muy buenas bonificaciones de tropas del 26 al 30)',
@@ -319,6 +319,16 @@ const es: GuideSection[] = [
       {
         type: 'paragraph',
         text: 'No te molestes con el resto. Los edificios de recursos simplemente no valen la pena después del nivel 14 más o menos.',
+      },
+    ],
+  },
+  {
+    id: 'where-to-spend-diamonds',
+    title: '¿Dónde Gastar Diamantes?',
+    blocks: [
+      {
+        type: 'paragraph',
+        text: 'Las sugerencias anteriores son para las tiendas y el evento semanal. Después de eso, intenta llegar a VIP 10; tiene varios beneficios importantes, incluyendo un fragmento de héroe naranja diario.',
       },
     ],
   },
