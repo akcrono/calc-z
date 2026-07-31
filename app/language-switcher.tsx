@@ -11,6 +11,7 @@ const NATIVE_NAMES: Record<Locale, string> = {
   ja: '日本語',
   'zh-CN': '简体中文',
   'zh-TW': '繁體中文',
+  ar: 'العربية',
 };
 
 export default function LanguageSwitcher() {

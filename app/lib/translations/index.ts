@@ -6,12 +6,13 @@ import ko from './ko';
 import ja from './ja';
 import zhCN from './zh-CN';
 import zhTW from './zh-TW';
+import ar from './ar';
 
 export type { Translations };
 
 // zh-CN listed before zh-TW deliberately: a bare "zh" prefix (no region)
 // in Accept-Language falls back to Simplified via the prefix match below.
-export const SUPPORTED_LOCALES = ['en', 'es', 'it', 'ko', 'ja', 'zh-CN', 'zh-TW'] as const;
+export const SUPPORTED_LOCALES = ['en', 'es', 'it', 'ko', 'ja', 'zh-CN', 'zh-TW', 'ar'] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
 export const translations: Record<Locale, Translations> = {
@@ -22,7 +23,12 @@ export const translations: Record<Locale, Translations> = {
   ja,
   'zh-CN': zhCN,
   'zh-TW': zhTW,
+  ar,
 };
+
+/** Locales that read right-to-left. Consulted by LocaleProvider to set
+ * `document.documentElement.dir` so layout mirrors correctly. */
+export const RTL_LOCALES: ReadonlySet<Locale> = new Set(['ar']);
 
 /** Parses an Accept-Language header and returns the best-matching supported
  * locale: exact tag match first (e.g. `zh-TW`), then a same-language prefix
