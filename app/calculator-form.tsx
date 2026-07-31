@@ -4,7 +4,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
 import { calculate, validateRate } from './lib/calc';
-import { useLocale } from './lib/locale-context';
+import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import Emblem from './emblem';
 import LanguageSwitcher from './language-switcher';
 import GuideBanner from './guide-banner';
@@ -14,6 +14,7 @@ export default function CalculatorForm() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { locale, t } = useLocale();
+  useLocalizedTitle(t.appTitle);
 
   const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
   const [amountInput, setAmountInput] = useState(() => searchParams.get('amount') ?? '');

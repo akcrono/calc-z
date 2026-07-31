@@ -15,6 +15,10 @@ const zhTW: Translations = {
   rateError: '請輸入大於 0 的數值。',
   languageLabel: '語言',
   guideLinkLabel: '遊戲攻略',
+  guideBackLink: '← 返回計算機',
+  guideTitle: '遊戲攻略',
+  guideTocLabel: '目錄',
+  guideDescription: 'Last Z 攻略技巧與優先順序清單：卡車、懸賞、商店、英雄戰場等。',
 };
 
 export default zhTW;

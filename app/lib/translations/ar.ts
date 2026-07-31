@@ -15,6 +15,11 @@ const ar: Translations = {
   rateError: 'أدخل معدلاً أكبر من 0.',
   languageLabel: 'اللغة',
   guideLinkLabel: 'أدلة اللعبة',
+  guideBackLink: '← العودة إلى الحاسبة',
+  guideTitle: 'دليل اللعبة',
+  guideTocLabel: 'جدول المحتويات',
+  guideDescription:
+    'نصائح استراتيجية وقوائم أولويات لـ Last Z: الشاحنات، المكافآت، المتاجر، ساحة معركة الأبطال، والمزيد.',
 };
 
 export default ar;

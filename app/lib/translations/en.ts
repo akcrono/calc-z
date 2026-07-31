@@ -15,6 +15,11 @@ const en: Translations = {
   rateError: 'Enter a rate greater than 0.',
   languageLabel: 'Language',
   guideLinkLabel: 'Gameplay Guides',
+  guideBackLink: '← Back to calculator',
+  guideTitle: 'Gameplay Guide',
+  guideTocLabel: 'Table of contents',
+  guideDescription:
+    'Strategy tips and priority lists for Last Z: trucks, bounties, shops, hero battlefield, and more.',
 };
 
 export default en;

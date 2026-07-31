@@ -15,6 +15,10 @@ const ko: Translations = {
   rateError: '0보다 큰 값을 입력하세요.',
   languageLabel: '언어',
   guideLinkLabel: '게임 가이드',
+  guideBackLink: '← 계산기로 돌아가기',
+  guideTitle: '게임 가이드',
+  guideTocLabel: '목차',
+  guideDescription: 'Last Z 전략 팁과 우선순위 목록: 트럭, 현상수배, 상점, 영웅 전장 등.',
 };
 
 export default ko;

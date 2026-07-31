@@ -1,6 +1,6 @@
-import type { GuideSection } from './types';
+import type { GuideSection } from '../types';
 
-export const guideSections: GuideSection[] = [
+const en: GuideSection[] = [
   {
     id: 'trucks',
     title: 'Trucks',
@@ -344,3 +344,5 @@ export const guideSections: GuideSection[] = [
     ],
   },
 ];
+
+export default en;

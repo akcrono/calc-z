@@ -15,6 +15,11 @@ const es: Translations = {
   rateError: 'Introduce una tasa mayor que 0.',
   languageLabel: 'Idioma',
   guideLinkLabel: 'Guías de juego',
+  guideBackLink: '← Volver a la calculadora',
+  guideTitle: 'Guía de juego',
+  guideTocLabel: 'Índice',
+  guideDescription:
+    'Consejos de estrategia y listas de prioridades para Last Z: camiones, recompensas, tiendas, campo de batalla de héroes y más.',
 };
 
 export default es;

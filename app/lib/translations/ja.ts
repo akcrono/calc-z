@@ -15,6 +15,11 @@ const ja: Translations = {
   rateError: '0より大きい値を入力してください。',
   languageLabel: '言語',
   guideLinkLabel: 'ゲームガイド',
+  guideBackLink: '← 計算機に戻る',
+  guideTitle: 'ゲームガイド',
+  guideTocLabel: '目次',
+  guideDescription:
+    'Last Zの戦略のコツと優先順位リスト:トラック、バウンティ、ショップ、ヒーローバトルフィールドなど。',
 };
 
 export default ja;

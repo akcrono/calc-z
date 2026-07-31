@@ -15,6 +15,10 @@ const zhCN: Translations = {
   rateError: '请输入大于 0 的数值。',
   languageLabel: '语言',
   guideLinkLabel: '游戏攻略',
+  guideBackLink: '← 返回计算器',
+  guideTitle: '游戏攻略',
+  guideTocLabel: '目录',
+  guideDescription: 'Last Z 攻略技巧与优先级列表：卡车、悬赏、商店、英雄战场等。',
 };
 
 export default zhCN;

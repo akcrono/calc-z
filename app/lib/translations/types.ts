@@ -13,4 +13,8 @@ export interface Translations {
   rateError: string;
   languageLabel: string;
   guideLinkLabel: string;
+  guideBackLink: string;
+  guideTitle: string;
+  guideTocLabel: string;
+  guideDescription: string;
 }
