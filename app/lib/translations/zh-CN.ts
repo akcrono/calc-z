@@ -14,6 +14,7 @@ const zhCN: Translations = {
   readyAfter: '重置后',
   rateError: '请输入大于 0 的数值。',
   languageLabel: '语言',
+  guideLinkLabel: '游戏攻略',
 };
 
 export default zhCN;

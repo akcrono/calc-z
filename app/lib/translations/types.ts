@@ -12,4 +12,5 @@ export interface Translations {
   readyAfter: string;
   rateError: string;
   languageLabel: string;
+  guideLinkLabel: string;
 }

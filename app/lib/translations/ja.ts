@@ -14,6 +14,7 @@ const ja: Translations = {
   readyAfter: 'リセット後',
   rateError: '0より大きい値を入力してください。',
   languageLabel: '言語',
+  guideLinkLabel: 'ゲームガイド',
 };
 
 export default ja;

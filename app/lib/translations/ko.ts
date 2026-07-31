@@ -14,6 +14,7 @@ const ko: Translations = {
   readyAfter: '리셋 후',
   rateError: '0보다 큰 값을 입력하세요.',
   languageLabel: '언어',
+  guideLinkLabel: '게임 가이드',
 };
 
 export default ko;

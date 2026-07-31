@@ -17,13 +17,21 @@ export function LocaleProvider({
   initialLocale: Locale;
   children: ReactNode;
 }) {
-  const [locale, setLocale] = useState<Locale>(initialLocale);
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   useEffect(() => {
     document.documentElement.lang = locale;
     document.documentElement.dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
-    document.title = translations[locale].appTitle;
   }, [locale]);
+
+  // Only touch document.title on an explicit user-driven locale switch, not
+  // on every mount — otherwise this clobbers whatever title the current
+  // route's own metadata set (e.g. on a direct/refreshed load of a page
+  // other than the calculator).
+  function setLocale(next: Locale) {
+    setLocaleState(next);
+    document.title = translations[next].appTitle;
+  }
 
   return <LocaleContext.Provider value={{ locale, setLocale }}>{children}</LocaleContext.Provider>;
 }

@@ -14,6 +14,7 @@ const ar: Translations = {
   readyAfter: 'بعد إعادة التعيين',
   rateError: 'أدخل معدلاً أكبر من 0.',
   languageLabel: 'اللغة',
+  guideLinkLabel: 'أدلة اللعبة',
 };
 
 export default ar;

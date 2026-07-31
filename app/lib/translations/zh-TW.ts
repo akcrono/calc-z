@@ -14,6 +14,7 @@ const zhTW: Translations = {
   readyAfter: '重置後',
   rateError: '請輸入大於 0 的數值。',
   languageLabel: '語言',
+  guideLinkLabel: '遊戲攻略',
 };
 
 export default zhTW;

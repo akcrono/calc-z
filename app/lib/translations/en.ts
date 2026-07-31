@@ -14,6 +14,7 @@ const en: Translations = {
   readyAfter: 'After reset',
   rateError: 'Enter a rate greater than 0.',
   languageLabel: 'Language',
+  guideLinkLabel: 'Gameplay Guides',
 };
 
 export default en;

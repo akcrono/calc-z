@@ -14,6 +14,7 @@ const it: Translations = {
   readyAfter: 'Dopo il reset',
   rateError: 'Inserisci un tasso maggiore di 0.',
   languageLabel: 'Lingua',
+  guideLinkLabel: 'Guide di gioco',
 };
 
 export default it;

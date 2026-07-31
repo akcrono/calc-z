@@ -14,6 +14,7 @@ const es: Translations = {
   readyAfter: 'Después del reinicio',
   rateError: 'Introduce una tasa mayor que 0.',
   languageLabel: 'Idioma',
+  guideLinkLabel: 'Guías de juego',
 };
 
 export default es;
