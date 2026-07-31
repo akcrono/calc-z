@@ -7,6 +7,7 @@ import { calculate, validateRate } from './lib/calc';
 import { useLocale } from './lib/locale-context';
 import Emblem from './emblem';
 import LanguageSwitcher from './language-switcher';
+import GuideBanner from './guide-banner';
 
 export default function CalculatorForm() {
   const router = useRouter();
@@ -140,14 +141,13 @@ export default function CalculatorForm() {
         </div>
       </div>
 
-      <p className="mt-4 text-center text-sm">
-        <Link
-          href="/guide"
-          className="text-amber-800 dark:text-amber-300 hover:underline focus:outline-none focus:ring-2 focus:ring-amber-500 rounded"
-        >
-          {t.guideLinkLabel}
-        </Link>
-      </p>
+      <Link
+        href="/guide"
+        aria-label={t.guideLinkLabel}
+        className="mt-4 block transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
+      >
+        <GuideBanner />
+      </Link>
     </div>
   );
 }

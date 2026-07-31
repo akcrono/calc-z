@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Emblem from '../emblem';
+import GuideBanner from '../guide-banner';
 import { guideSections } from '../lib/guide/sections';
 
 export const metadata: Metadata = {
@@ -20,11 +20,12 @@ export default function GuidePage() {
           ← Back to calculator
         </Link>
 
-        <div className="text-center mt-4 mb-8">
-          <Emblem />
-          <h1 className="mt-2 text-2xl font-semibold tracking-wide text-amber-800 dark:text-amber-300">
-            Gameplay Guide
-          </h1>
+        {/* Banner already conveys the page's title visually; keep an h1 for
+            correct heading hierarchy/accessibility without showing a
+            redundant second title. */}
+        <h1 className="sr-only">Gameplay Guide</h1>
+        <div className="mt-4 mb-8">
+          <GuideBanner priority />
         </div>
 
         <nav
