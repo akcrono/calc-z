@@ -23,7 +23,7 @@ export default function LanguageSwitcher() {
       <select
         value={locale}
         onChange={e => setLocale(e.target.value as Locale)}
-        className="rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-2 py-1 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+        className="rounded-[var(--radius-md)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-1 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)]"
       >
         {SUPPORTED_LOCALES.map(code => (
           <option key={code} value={code}>

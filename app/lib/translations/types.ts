@@ -5,9 +5,9 @@ export interface Translations {
   rateLabel: string;
   amountLabel: string;
   neededLabel: string;
-  hoursLeftLabel: string;
-  hoursBeforeResetLabel: string;
-  readyLabel: string;
+  timeUntilTargetLabel: string;
+  timeUntilResetLabel: string;
+  resetVerdictLabel: string;
   readyBefore: string;
   readyAfter: string;
   rateError: string;
@@ -17,4 +17,14 @@ export interface Translations {
   guideTitle: string;
   guideTocLabel: string;
   guideDescription: string;
+  heroEyebrow: string;
+  calculatorHeading: string;
+  calculatorSubhead: string;
+  storagePlaceholder: string;
+  targetPlaceholder: string;
+  ratePlaceholder: string;
+  marginToSpare: string;
+  marginMissesBy: string;
+  alreadyReachedMessage: string;
+  footerDisclaimer: string;
 }

@@ -2,14 +2,14 @@ import type { Translations } from './types';
 
 const zhCN: Translations = {
   appTitle: 'Last Z 蕨叶计算器',
-  appDescription: '计算距离重置的时间，以及达到目标蕨叶数量所需的时间。',
+  appDescription: '计算在 Last Z: Survival Shooter 中达到蕨叶目标所需的时间。',
   loading: '加载中…',
   rateLabel: '每小时蕨叶数',
   amountLabel: '库存蕨叶数',
-  neededLabel: '下次升级所需的蕨叶总数',
-  hoursLeftLabel: '获得蕨叶所需时间',
-  hoursBeforeResetLabel: '距离重置的时间',
-  readyLabel: '状态',
+  neededLabel: '下次升级所需总量',
+  timeUntilTargetLabel: '距离目标的时间',
+  timeUntilResetLabel: '距离重置的时间',
+  resetVerdictLabel: '相对服务器重置',
   readyBefore: '重置前',
   readyAfter: '重置后',
   rateError: '请输入大于 0 的数值。',
@@ -19,6 +19,16 @@ const zhCN: Translations = {
   guideTitle: '游戏攻略',
   guideTocLabel: '目录',
   guideDescription: 'Last Z 攻略技巧与优先级列表：卡车、悬赏、商店、英雄战场等。',
+  heroEyebrow: 'Last Z: Survival Shooter',
+  calculatorHeading: '蕨叶重置计算器',
+  calculatorSubhead: '输入你的蕨叶获取速率，即可准确知道何时能达成下一次升级。',
+  storagePlaceholder: '例如 4300',
+  targetPlaceholder: '例如 25000',
+  ratePlaceholder: '例如 120',
+  marginToSpare: '富余 {duration}',
+  marginMissesBy: '差 {duration}',
+  alreadyReachedMessage: '已达成目标 — 快去领取你的升级吧。',
+  footerDisclaimer: 'Last Z: Survival Shooter 的非官方粉丝工具。',
 };
 
 export default zhCN;
