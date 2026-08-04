@@ -1025,6 +1025,107 @@ git commit -m "Re-skin guide page with Nocturne tokens"
 
 ---
 
+### Task 5b: Fix two files the plan missed — `app/page.tsx` and `app/language-switcher.tsx`
+
+**Why this task exists:** Task 6's verification pass (run against Tasks 1-5) found that the plan's file list was incomplete. Two files still carry the pre-Nocturne theme and were never assigned to any task:
+- `app/page.tsx` wraps `<CalculatorForm />` in a `<main>` that still has the original `bg-amber-50 dark:bg-zinc-950` classes — Task 4 only rewrote `calculator-form.tsx`'s own returned JSX, which doesn't include this outer wrapper.
+- `app/language-switcher.tsx` (shared by both pages) still styles its `<select>` with the original zinc/amber/white classes — no task in the plan ever touched this file.
+
+This directly violates the Global Constraint that the whole site uses the Nocturne palette with no light theme remaining. This task closes that gap before final verification re-runs.
+
+**Files:**
+- Modify: `app/page.tsx`
+- Modify: `app/language-switcher.tsx`
+
+**Interfaces:**
+- Consumes: the same `--color-bg`, `--color-surface`, `--color-text`, `--color-divider`, `--color-accent`, `--radius-md` tokens from Task 1 that Tasks 4-5 already used. No new tokens needed.
+
+- [ ] **Step 1: Fix `app/page.tsx`**
+
+Change the `<main>` className from `"min-h-screen flex items-center justify-center p-4 bg-amber-50 dark:bg-zinc-950"` to `"min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg)]"`. Nothing else in this file changes.
+
+Full file after the change:
+
+```tsx
+import { Suspense } from 'react';
+import CalculatorForm from './calculator-form';
+import { translations } from './lib/translations';
+import { detectLocale } from './lib/locale-server';
+
+export default async function Page() {
+  const initialLocale = await detectLocale();
+
+  return (
+    <main className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg)]">
+      <Suspense fallback={<div className="text-gray-500">{translations[initialLocale].loading}</div>}>
+        <CalculatorForm />
+      </Suspense>
+    </main>
+  );
+}
+```
+
+- [ ] **Step 2: Fix `app/language-switcher.tsx`**
+
+Change the `<select>`'s className from `"rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-2 py-1 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"` to the token-based equivalent, matching the same pattern Task 4 already used for the calculator's inputs. Nothing else in this file changes.
+
+Full file after the change:
+
+```tsx
+'use client';
+
+import { SUPPORTED_LOCALES, type Locale } from './lib/translations';
+import { useLocale } from './lib/locale-context';
+
+const NATIVE_NAMES: Record<Locale, string> = {
+  en: 'English',
+  es: 'Español',
+  it: 'Italiano',
+  ko: '한국어',
+  ja: '日本語',
+  'zh-CN': '简体中文',
+  'zh-TW': '繁體中文',
+  ar: 'العربية',
+};
+
+export default function LanguageSwitcher() {
+  const { locale, setLocale, t } = useLocale();
+
+  return (
+    <label className="absolute top-4 right-4 text-xs">
+      <span className="sr-only">{t.languageLabel}</span>
+      <select
+        value={locale}
+        onChange={e => setLocale(e.target.value as Locale)}
+        className="rounded-[var(--radius-md)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-1 text-[var(--color-text)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-[var(--color-accent)]"
+      >
+        {SUPPORTED_LOCALES.map(code => (
+          <option key={code} value={code}>
+            {NATIVE_NAMES[code]}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+```
+
+- [ ] **Step 3: Verify**
+
+Run: `npx tsc --noEmit`
+Expected: no errors.
+
+Since `LanguageSwitcher` renders on both the calculator and guide pages, and `page.tsx` wraps the calculator, this one task fixes the remaining light-theme leak on both pages at once — no separate guide-page task needed.
+
+- [ ] **Step 4: Commit**
+
+```bash
+git add app/page.tsx app/language-switcher.tsx
+git commit -m "Fix remaining pre-Nocturne classes in page.tsx and language-switcher.tsx"
+```
+
+---
+
 ### Task 6: End-to-end verification (both pages, all 8 locales, RTL)
 
 **Files:**
