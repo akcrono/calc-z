@@ -668,7 +668,7 @@ export default ar;
 - [ ] **Step 10: Verify**
 
 Run: `npx tsc --noEmit`
-Expected: no errors (this is the step that actually proves all 8 files satisfy the updated `Translations` interface).
+Expected: **exactly 3 errors, all in `app/calculator-form.tsx`**, on the lines referencing `t.hoursLeftLabel`, `t.hoursBeforeResetLabel`, and `t.readyLabel` — those are the pre-rename key names this task just removed from `Translations`. This is expected and correct at this point in the sequence: `calculator-form.tsx` isn't rewritten until Task 4, which is the one that switches it to the new key names. If `tsc` reports errors anywhere else, or a different count/location, stop and treat that as a real problem — but these specific 3 are the expected, known, temporary state between Task 3 and Task 4 within this one working branch (nothing merges to main until the whole plan is done). This also proves all 8 locale files satisfy the updated `Translations` interface — a missing/mistyped key in any locale file would show up as an *additional* error beyond these 3.
 
 - [ ] **Step 11: Commit**
 
