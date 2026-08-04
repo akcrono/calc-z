@@ -116,11 +116,13 @@ Replace the entire file with:
 body {
   background: var(--color-bg);
   color: var(--color-text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
 }
 ```
 
 (The `--emblem-grad-*` vars and hourglass/sand keyframes are untouched — `Emblem` is stashed, not deleted, so its styling stays intact for a future re-add.)
+
+(**Correction from the final whole-branch review:** the `body` rule's `font-family` above originally read just `Arial, Helvetica, sans-serif`, carried forward unchanged from the pre-redesign file. That silently overrides the Inter font `app/layout.tsx` wires up via Tailwind's `html`-level preflight rule — `body`'s own explicit declaration wins the cascade over an inherited default — so despite Inter being a stated Global Constraint, it never actually rendered. Fixed by prepending `var(--font-inter)` to the fallback chain. This was a plan-authoring defect: no task-scoped review could catch it, since it only becomes visible by inspecting the actually-compiled/served stylesheet, which is exactly what the whole-branch review did.)
 
 - [ ] **Step 2: Swap Geist for Inter in `app/layout.tsx`**
 
@@ -755,7 +757,7 @@ export default function CalculatorForm() {
   const result = validation.valid ? calculate({ rate, amount, needed }) : null;
 
   const showRateError = rateInput !== '' && !validation.valid;
-  const alreadyReached = leftover <= 0 && (amountInput !== '' || neededInput !== '');
+  const alreadyReached = neededInput !== '' && leftover <= 0;
   const hasResult = validation.valid && result !== null && leftover > 0;
 
   const marginLabel =
@@ -791,8 +793,9 @@ export default function CalculatorForm() {
       >
         <div className="flex gap-4 flex-wrap">
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
+            <label htmlFor="storage" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
             <input
+              id="storage"
               type="number"
               min="0"
               step="any"
@@ -803,8 +806,9 @@ export default function CalculatorForm() {
             />
           </div>
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
+            <label htmlFor="target" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
             <input
+              id="target"
               type="number"
               min="0"
               step="any"
@@ -815,8 +819,9 @@ export default function CalculatorForm() {
             />
           </div>
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
+            <label htmlFor="rate" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
             <input
+              id="rate"
               type="number"
               min="0"
               step="any"
@@ -833,13 +838,15 @@ export default function CalculatorForm() {
           </div>
         </div>
 
-        <div
-          className="h-px my-1"
-          style={{
-            background:
-              'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
-          }}
-        />
+        {(hasResult || alreadyReached) && (
+          <div
+            className="h-px my-1"
+            style={{
+              background:
+                'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
+            }}
+          />
+        )}
 
         {hasResult && result ? (
           <div className="flex gap-4 flex-wrap">
@@ -895,6 +902,8 @@ export default function CalculatorForm() {
   );
 }
 ```
+
+(**Correction from the final whole-branch review:** three fixes are folded into the code above that weren't in the original version of this task. (1) `alreadyReached` now requires `neededInput !== ''` — the original `leftover <= 0 && (amountInput !== '' || neededInput !== '')` let the "already reached" message fire the moment a user typed a storage value alone, before entering any target, since storage is now the first field in the reordered layout. (2) Each `<label>`/`<input>` pair now has matching `htmlFor`/`id` (`storage`/`target`/`rate`) — the original code lost this association entirely, a real accessibility regression from the pre-redesign version. (3) The divider between the input row and the results section is now wrapped in `{(hasResult || alreadyReached) && (...)}` — previously it rendered unconditionally, leaving a dangling hairline under nothing on a pristine empty form. None of these were catchable by a task-scoped review checking this code against its own brief, since the brief itself specified the flawed version.)
 
 - [ ] **Step 2: Verify it compiles**
 
@@ -1057,13 +1066,15 @@ export default async function Page() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg)]">
-      <Suspense fallback={<div className="text-gray-500">{translations[initialLocale].loading}</div>}>
+      <Suspense fallback={<div className="text-[var(--color-text)] opacity-70">{translations[initialLocale].loading}</div>}>
         <CalculatorForm />
       </Suspense>
     </main>
   );
 }
 ```
+
+(**Correction from the final whole-branch review:** the `Suspense` fallback's `text-gray-500` above was the one class this task should have caught but didn't — it's the loading state shown on first paint, and it was the only leftover pre-Nocturne class anywhere in the app outside the intentionally-untouched `emblem.tsx`. Fixed to `text-[var(--color-text)] opacity-70`, matching the muted-text convention used elsewhere.)
 
 - [ ] **Step 2: Fix `app/language-switcher.tsx`**
 
