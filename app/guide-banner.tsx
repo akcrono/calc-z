@@ -8,7 +8,7 @@ export default function GuideBanner({ priority }: { priority?: boolean }) {
       width={2000}
       height={848}
       priority={priority}
-      className="w-full h-auto rounded-lg shadow-lg shadow-amber-900/20"
+      className="w-full h-auto rounded-[var(--radius-md)] shadow-[var(--shadow-sm)]"
     />
   );
 }
