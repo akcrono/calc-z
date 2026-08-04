@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { calculate, validateRate } from './lib/calc';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
-import Emblem from './emblem';
+import { formatDuration } from './lib/format-duration';
 import LanguageSwitcher from './language-switcher';
 import GuideBanner from './guide-banner';
 
@@ -13,7 +13,7 @@ export default function CalculatorForm() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { locale, t } = useLocale();
+  const { t } = useLocale();
   useLocalizedTitle(t.appTitle);
 
   const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
@@ -51,104 +51,148 @@ export default function CalculatorForm() {
   const rate = Number(rateInput);
   const amount = parseOrZero(amountInput);
   const needed = parseOrZero(neededInput);
+  const leftover = needed - amount;
 
   const validation = validateRate(rate);
   const result = validation.valid ? calculate({ rate, amount, needed }) : null;
 
-  const numberFormat = new Intl.NumberFormat(locale, {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
+  const showRateError = rateInput !== '' && !validation.valid;
+  const alreadyReached = leftover <= 0 && (amountInput !== '' || neededInput !== '');
+  const hasResult = validation.valid && result !== null && leftover > 0;
+
+  const marginLabel =
+    result && hasResult
+      ? result.readyRelation === 'before'
+        ? t.marginToSpare.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
+        : t.marginMissesBy.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
+      : '';
+  const verdictBg = result?.readyRelation === 'before' ? 'var(--color-accent-800)' : 'var(--color-neutral-800)';
+  const verdictColor = result?.readyRelation === 'before' ? 'var(--color-accent-100)' : 'var(--color-neutral-100)';
 
   return (
-    <div className="w-full max-w-md">
-      <div className="relative rounded-lg bg-gradient-to-br from-amber-400 via-rose-500 to-amber-800 dark:from-amber-500/60 dark:via-rose-600/60 dark:to-amber-900/60 p-[2px] shadow-lg shadow-amber-900/20">
-        <LanguageSwitcher />
-        <div className="space-y-6 rounded-[7px] bg-white dark:bg-zinc-900 p-6 text-zinc-900 dark:text-zinc-100">
-          <div className="text-center">
-            <Emblem />
-            <h1 className="mt-2 text-lg font-semibold tracking-wide text-amber-800 dark:text-amber-300">
-              {t.appTitle}
-            </h1>
-          </div>
+    <div className="relative w-full max-w-[760px]">
+      <LanguageSwitcher />
+      <span className="font-medium text-[var(--color-text)]">{t.appTitle}</span>
 
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="rate" className="block text-sm font-medium text-amber-800 dark:text-amber-300">{t.rateLabel}</label>
-              <input
-                id="rate"
-                type="number"
-                inputMode="decimal"
-                step="any"
-                value={rateInput}
-                onChange={e => handleRateChange(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="amount" className="block text-sm font-medium text-amber-800 dark:text-amber-300">{t.amountLabel}</label>
-              <input
-                id="amount"
-                type="number"
-                inputMode="decimal"
-                step="any"
-                value={amountInput}
-                onChange={e => handleAmountChange(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="needed" className="block text-sm font-medium text-amber-800 dark:text-amber-300">{t.neededLabel}</label>
-              <input
-                id="needed"
-                type="number"
-                inputMode="decimal"
-                step="any"
-                value={neededInput}
-                onChange={e => handleNeededChange(e.target.value)}
-                className="mt-1 block w-full rounded-md border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-3 py-2 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              />
-            </div>
-          </div>
-
-          {validation.valid && result ? (
-            <dl className="space-y-1 text-sm text-zinc-600 dark:text-zinc-400">
-              <div className="flex justify-between">
-                <dt>{t.hoursLeftLabel}</dt><dd>{numberFormat.format(result.hoursLeft)}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt>{t.hoursBeforeResetLabel}</dt><dd>{numberFormat.format(result.hoursBeforeReset)}</dd>
-              </div>
-              <div className="flex justify-between font-semibold text-amber-600 dark:text-amber-400">
-                <dt>{t.readyLabel}</dt>
-                <dd
-                  className={`text-base font-black ${
-                    result.readyRelation === 'after'
-                      ? 'text-red-600 dark:text-red-400'
-                      : 'text-green-600 dark:text-green-400'
-                  }`}
-                >
-                  {result.readyRelation === 'after' ? t.readyAfter : t.readyBefore}
-                </dd>
-              </div>
-            </dl>
-          ) : (
-            <p className="text-red-600 dark:text-red-400 text-sm">
-              {validation.error === 'rate-must-be-positive' ? t.rateError : null}
-            </p>
-          )}
+      <div className="mt-8">
+        <div
+          className="inline-block text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
+          style={{ background: 'var(--color-accent-800)', color: 'var(--color-accent-100)' }}
+        >
+          {t.heroEyebrow}
         </div>
+        <h1 className="text-[42px] leading-[1.12] tracking-[-0.015em] font-medium text-[var(--color-text)]">
+          {t.calculatorHeading}
+        </h1>
+        <p className="text-[var(--color-text)] opacity-70 max-w-[46ch] mb-8 mt-2">{t.calculatorSubhead}</p>
       </div>
 
-      <Link
-        href="/guide"
-        aria-label={t.guideLinkLabel}
-        className="mt-4 block transition-transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-amber-500 rounded-lg"
+      <div
+        className="rounded-lg p-6 flex flex-col gap-4"
+        style={{ background: 'var(--color-surface)', boxShadow: 'var(--shadow-sm)' }}
       >
-        <GuideBanner />
-      </Link>
+        <div className="flex gap-4 flex-wrap">
+          <div className="flex-1 basis-[200px]">
+            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
+            <input
+              type="number"
+              min="0"
+              step="any"
+              placeholder={t.storagePlaceholder}
+              value={amountInput}
+              onChange={e => handleAmountChange(e.target.value)}
+              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
+            />
+          </div>
+          <div className="flex-1 basis-[200px]">
+            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
+            <input
+              type="number"
+              min="0"
+              step="any"
+              placeholder={t.targetPlaceholder}
+              value={neededInput}
+              onChange={e => handleNeededChange(e.target.value)}
+              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
+            />
+          </div>
+          <div className="flex-1 basis-[200px]">
+            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
+            <input
+              type="number"
+              min="0"
+              step="any"
+              placeholder={t.ratePlaceholder}
+              value={rateInput}
+              onChange={e => handleRateChange(e.target.value)}
+              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
+            />
+            {showRateError && (
+              <div className="text-xs mt-[5px]" style={{ color: 'var(--color-accent-300)' }}>
+                {t.rateError}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div
+          className="h-px my-1"
+          style={{
+            background:
+              'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
+          }}
+        />
+
+        {hasResult && result ? (
+          <div className="flex gap-4 flex-wrap">
+            <div className="flex-1 basis-[160px]">
+              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
+                {t.timeUntilTargetLabel}
+              </div>
+              <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
+                {formatDuration(result.hoursLeft)}
+              </h3>
+            </div>
+            <div className="flex-1 basis-[160px]">
+              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
+                {t.timeUntilResetLabel}
+              </div>
+              <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
+                {formatDuration(result.hoursBeforeReset)}
+              </h3>
+            </div>
+            <div className="flex-1 basis-[160px]">
+              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
+                {t.resetVerdictLabel}
+              </div>
+              <div
+                className="inline-block text-[13px] font-medium px-3 py-1 rounded-[var(--radius-sm)]"
+                style={{ background: verdictBg, color: verdictColor }}
+              >
+                {result.readyRelation === 'after' ? t.readyAfter : t.readyBefore}
+              </div>
+              <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{marginLabel}</div>
+            </div>
+          </div>
+        ) : alreadyReached ? (
+          <p className="text-sm opacity-85 text-[var(--color-text)]">{t.alreadyReachedMessage}</p>
+        ) : null}
+      </div>
+
+      <div className="mt-8">
+        <Link
+          href="/guide"
+          aria-label={t.guideLinkLabel}
+          className="block w-[600px] max-w-full rounded-[var(--radius-md)] overflow-hidden"
+        >
+          <GuideBanner />
+        </Link>
+      </div>
+
+      <div className="mt-8 pt-4">
+        <div className="h-px mb-4" style={{ background: 'var(--color-divider)' }} />
+        <p className="text-xs opacity-70 text-[var(--color-text)]">{t.footerDisclaimer}</p>
+      </div>
     </div>
   );
 }
