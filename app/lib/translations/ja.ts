@@ -2,14 +2,14 @@ import type { Translations } from './types';
 
 const ja: Translations = {
   appTitle: 'ラストZ シダ計算機',
-  appDescription: 'リセットまでの時間と、目標のシダ量に到達するまでの時間を計算します。',
+  appDescription: 'Last Z: Survival Shooterでシダの目標に到達するまでの時間を計算します。',
   loading: '読み込み中…',
   rateLabel: '1時間あたりのシダの葉',
   amountLabel: '保有しているシダの葉',
-  neededLabel: '次のアップグレードに必要なシダの葉の合計',
-  timeUntilTargetLabel: 'シダの葉獲得までの時間',
+  neededLabel: '次のアップグレードに必要な合計',
+  timeUntilTargetLabel: '目標までの時間',
   timeUntilResetLabel: 'リセットまでの時間',
-  resetVerdictLabel: '状態',
+  resetVerdictLabel: 'サーバーリセットとの比較',
   readyBefore: 'リセット前',
   readyAfter: 'リセット後',
   rateError: '0より大きい値を入力してください。',
@@ -21,15 +21,15 @@ const ja: Translations = {
   guideDescription:
     'Last Zの戦略のコツと優先順位リスト:トラック、バウンティ、ショップ、ヒーローバトルフィールドなど。',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Fern reset calculator',
-  calculatorSubhead: "Enter your fernleaf rate to see exactly when you'll hit your next upgrade.",
-  storagePlaceholder: 'e.g. 4300',
-  targetPlaceholder: 'e.g. 25000',
-  ratePlaceholder: 'e.g. 120',
-  marginToSpare: '{duration} to spare',
-  marginMissesBy: 'misses by {duration}',
-  alreadyReachedMessage: 'Target already reached — go collect your upgrade.',
-  footerDisclaimer: 'Unofficial fan tool for Last Z: Survival Shooter.',
+  calculatorHeading: 'シダリセット計算機',
+  calculatorSubhead: 'シダの獲得速度を入力すると、次のアップグレードに到達する正確なタイミングがわかります。',
+  storagePlaceholder: '例: 4300',
+  targetPlaceholder: '例: 25000',
+  ratePlaceholder: '例: 120',
+  marginToSpare: '{duration}の余裕',
+  marginMissesBy: '{duration}足りません',
+  alreadyReachedMessage: '目標に到達済みです — アップグレードを受け取りに行きましょう。',
+  footerDisclaimer: 'Last Z: Survival Shooterの非公式ファンツールです。',
 };
 
 export default ja;
