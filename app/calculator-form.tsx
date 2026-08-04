@@ -8,6 +8,7 @@ import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import { formatDuration } from './lib/format-duration';
 import LanguageSwitcher from './language-switcher';
 import GuideBanner from './guide-banner';
+import Emblem from './emblem';
 
 export default function CalculatorForm() {
   const router = useRouter();
@@ -74,17 +75,20 @@ export default function CalculatorForm() {
       <LanguageSwitcher />
       <span className="font-medium text-[var(--color-text)]">{t.appTitle}</span>
 
-      <div className="mt-8">
-        <div
-          className="inline-block text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
-          style={{ background: 'var(--color-accent-800)', color: 'var(--color-accent-100)' }}
-        >
-          {t.heroEyebrow}
+      <div className="mt-8 flex items-center justify-between gap-6">
+        <div>
+          <div
+            className="inline-block text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
+            style={{ background: 'var(--color-accent-800)', color: 'var(--color-accent-100)' }}
+          >
+            {t.heroEyebrow}
+          </div>
+          <h1 className="text-[42px] leading-[1.12] tracking-[-0.015em] font-medium text-[var(--color-text)]">
+            {t.calculatorHeading}
+          </h1>
+          <p className="text-[var(--color-text)] opacity-70 max-w-[46ch] mb-8 mt-2">{t.calculatorSubhead}</p>
         </div>
-        <h1 className="text-[42px] leading-[1.12] tracking-[-0.015em] font-medium text-[var(--color-text)]">
-          {t.calculatorHeading}
-        </h1>
-        <p className="text-[var(--color-text)] opacity-70 max-w-[46ch] mb-8 mt-2">{t.calculatorSubhead}</p>
+        <Emblem className="hidden sm:block h-24 w-24 shrink-0 text-amber-600 dark:text-amber-400" />
       </div>
 
       <div
