@@ -13,7 +13,7 @@
 - Full site (calculator + guide pages) uses the Nocturne palette; the `prefers-color-scheme` adaptive light/dark system is removed entirely — no light theme remains anywhere.
 - Font is Inter (weights 400/500/600/700) app-wide, replacing Geist Sans/Mono.
 - The animated `<Emblem />` component is **not deleted** — `app/emblem.tsx` stays in the repo, simply unused by the redesigned calculator page.
-- New/changed translation keys land in English (all 8 locale files, so every file still type-checks) in the structural commit; the other 7 locales' actual translations land in a separate, final commit.
+- New/changed translation keys go into all 8 locale files in the structural commit (Task 3), so every file still type-checks — but non-English placeholder VALUES differ by kind: the 4 renamed/reworded existing keys (`neededLabel`, `timeUntilTargetLabel`, `timeUntilResetLabel`, `resetVerdictLabel`) keep their OLD already-translated text under the new key/wording for now; the 9 genuinely-new keys (nothing to reuse) get English text as the only option. Real per-locale translations for both kinds land in a separate, final commit (Task 7).
 - `app/lib/calc.ts` is not modified — its `calculate()`/`nextReset()`/`validateRate()` outputs are reused as-is.
 - Design tokens are referenced via CSS custom properties (`var(--color-bg)` etc.), not hardcoded hex values, per the approved architecture.
 
