@@ -21,7 +21,7 @@ const es: Translations = {
   guideDescription:
     'Consejos de estrategia y listas de prioridades para Last Z: camiones, recompensas, tiendas, campo de batalla de héroes y más.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Calculadora de reinicio de helechos',
+  calculatorHeading: 'Calculadora de helechos',
   calculatorSubhead: 'Introduce tu tasa de helechos para ver exactamente cuándo alcanzarás tu próxima mejora.',
   storagePlaceholder: 'ej. 4300',
   targetPlaceholder: 'ej. 25000',

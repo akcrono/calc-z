@@ -20,7 +20,7 @@ const ko: Translations = {
   guideTocLabel: '목차',
   guideDescription: 'Last Z 전략 팁과 우선순위 목록: 트럭, 현상수배, 상점, 영웅 전장 등.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: '고사리 리셋 계산기',
+  calculatorHeading: '고사리 계산기',
   calculatorSubhead: '고사리 획득 속도를 입력하면 다음 업그레이드에 도달하는 정확한 시점을 확인할 수 있습니다.',
   storagePlaceholder: '예: 4300',
   targetPlaceholder: '예: 25000',

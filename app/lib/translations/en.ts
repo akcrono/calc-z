@@ -21,7 +21,7 @@ const en: Translations = {
   guideDescription:
     'Strategy tips and priority lists for Last Z: trucks, bounties, shops, hero battlefield, and more.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Fern reset calculator',
+  calculatorHeading: 'Fern calculator',
   calculatorSubhead: "Enter your fernleaf rate to see exactly when you'll hit your next upgrade.",
   storagePlaceholder: 'e.g. 4300',
   targetPlaceholder: 'e.g. 25000',

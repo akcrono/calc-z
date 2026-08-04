@@ -21,7 +21,7 @@ const ja: Translations = {
   guideDescription:
     'Last Zの戦略のコツと優先順位リスト:トラック、バウンティ、ショップ、ヒーローバトルフィールドなど。',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'シダリセット計算機',
+  calculatorHeading: 'シダ計算機',
   calculatorSubhead: 'シダの獲得速度を入力すると、次のアップグレードに到達する正確なタイミングがわかります。',
   storagePlaceholder: '例: 4300',
   targetPlaceholder: '例: 25000',

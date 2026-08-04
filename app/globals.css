@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  --emblem-grad-a: #fbbf24; /* amber-400 */
-  --emblem-grad-b: #f43f5e; /* rose-500 */
-  --emblem-grad-c: #92400e; /* amber-800 */
-
   /* Nocturne palette — fixed dark theme, no light variant */
   --color-bg: #161826;
   --color-surface: #232532;
