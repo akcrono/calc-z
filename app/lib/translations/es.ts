@@ -7,9 +7,9 @@ const es: Translations = {
   rateLabel: 'Hojas de helecho por hora',
   amountLabel: 'Hojas de helecho almacenadas',
   neededLabel: 'Total de hojas de helecho necesarias para la próxima mejora',
-  hoursLeftLabel: 'Horas antes de conseguir los helechos',
-  hoursBeforeResetLabel: 'Horas antes del reinicio',
-  readyLabel: 'Listo',
+  timeUntilTargetLabel: 'Horas antes de conseguir los helechos',
+  timeUntilResetLabel: 'Horas antes del reinicio',
+  resetVerdictLabel: 'Listo',
   readyBefore: 'Antes del reinicio',
   readyAfter: 'Después del reinicio',
   rateError: 'Introduce una tasa mayor que 0.',
@@ -20,6 +20,16 @@ const es: Translations = {
   guideTocLabel: 'Índice',
   guideDescription:
     'Consejos de estrategia y listas de prioridades para Last Z: camiones, recompensas, tiendas, campo de batalla de héroes y más.',
+  heroEyebrow: 'Last Z: Survival Shooter',
+  calculatorHeading: 'Fern reset calculator',
+  calculatorSubhead: "Enter your fernleaf rate to see exactly when you'll hit your next upgrade.",
+  storagePlaceholder: 'e.g. 4300',
+  targetPlaceholder: 'e.g. 25000',
+  ratePlaceholder: 'e.g. 120',
+  marginToSpare: '{duration} to spare',
+  marginMissesBy: 'misses by {duration}',
+  alreadyReachedMessage: 'Target already reached — go collect your upgrade.',
+  footerDisclaimer: 'Unofficial fan tool for Last Z: Survival Shooter.',
 };
 
 export default es;

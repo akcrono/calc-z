@@ -7,9 +7,9 @@ const it: Translations = {
   rateLabel: "Foglie di felce all'ora",
   amountLabel: 'Foglie di felce in magazzino',
   neededLabel: 'Totale foglie di felce necessarie per il prossimo potenziamento',
-  hoursLeftLabel: 'Ore prima di ottenere le felci',
-  hoursBeforeResetLabel: 'Ore prima del reset',
-  readyLabel: 'Pronto',
+  timeUntilTargetLabel: 'Ore prima di ottenere le felci',
+  timeUntilResetLabel: 'Ore prima del reset',
+  resetVerdictLabel: 'Pronto',
   readyBefore: 'Prima del reset',
   readyAfter: 'Dopo il reset',
   rateError: 'Inserisci un tasso maggiore di 0.',
@@ -20,6 +20,16 @@ const it: Translations = {
   guideTocLabel: 'Indice',
   guideDescription:
     'Consigli strategici ed elenchi di priorità per Last Z: camion, taglie, negozi, campo di battaglia degli eroi e altro ancora.',
+  heroEyebrow: 'Last Z: Survival Shooter',
+  calculatorHeading: 'Fern reset calculator',
+  calculatorSubhead: "Enter your fernleaf rate to see exactly when you'll hit your next upgrade.",
+  storagePlaceholder: 'e.g. 4300',
+  targetPlaceholder: 'e.g. 25000',
+  ratePlaceholder: 'e.g. 120',
+  marginToSpare: '{duration} to spare',
+  marginMissesBy: 'misses by {duration}',
+  alreadyReachedMessage: 'Target already reached — go collect your upgrade.',
+  footerDisclaimer: 'Unofficial fan tool for Last Z: Survival Shooter.',
 };
 
 export default it;
