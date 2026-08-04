@@ -21,7 +21,7 @@ const it: Translations = {
   guideDescription:
     'Consigli strategici ed elenchi di priorità per Last Z: camion, taglie, negozi, campo di battaglia degli eroi e altro ancora.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Calcolatore di reset delle felci',
+  calculatorHeading: 'Calcolatore di felci',
   calculatorSubhead: 'Inserisci il tuo tasso di felci per vedere esattamente quando raggiungerai il tuo prossimo potenziamento.',
   storagePlaceholder: 'es. 4300',
   targetPlaceholder: 'es. 25000',

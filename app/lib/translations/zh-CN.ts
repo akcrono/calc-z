@@ -20,7 +20,7 @@ const zhCN: Translations = {
   guideTocLabel: '目录',
   guideDescription: 'Last Z 攻略技巧与优先级列表：卡车、悬赏、商店、英雄战场等。',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: '蕨叶重置计算器',
+  calculatorHeading: '蕨叶计算器',
   calculatorSubhead: '输入你的蕨叶获取速率，即可准确知道何时能达成下一次升级。',
   storagePlaceholder: '例如 4300',
   targetPlaceholder: '例如 25000',

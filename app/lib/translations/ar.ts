@@ -21,7 +21,7 @@ const ar: Translations = {
   guideDescription:
     'نصائح استراتيجية وقوائم أولويات لـ Last Z: الشاحنات، المكافآت، المتاجر، ساحة معركة الأبطال، والمزيد.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'حاسبة إعادة تعيين أوراق السرخس',
+  calculatorHeading: 'حاسبة أوراق السرخس',
   calculatorSubhead: 'أدخل معدل حصولك على أوراق السرخس لمعرفة الوقت الدقيق الذي ستصل فيه إلى ترقيتك التالية.',
   storagePlaceholder: 'مثال: 4300',
   targetPlaceholder: 'مثال: 25000',
