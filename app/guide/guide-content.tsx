@@ -15,13 +15,13 @@ export default function GuideContent() {
   const guideSections = guideSectionsByLocale[locale];
 
   return (
-    <main dir={dir} className="min-h-screen p-4 bg-amber-50 dark:bg-zinc-950">
+    <main dir={dir} className="min-h-screen p-4 bg-[var(--color-bg)]">
       <div className="relative mx-auto max-w-2xl py-8">
         <LanguageSwitcher />
 
         <Link
           href="/"
-          className="text-sm text-amber-800 dark:text-amber-300 hover:underline focus:outline-none focus:ring-2 focus:ring-amber-500 rounded"
+          className="text-sm text-[var(--color-accent)] hover:underline focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] rounded"
         >
           {t.guideBackLink}
         </Link>
@@ -36,14 +36,14 @@ export default function GuideContent() {
 
         <nav
           aria-label={t.guideTocLabel}
-          className="mb-10 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4"
+          className="mb-10 rounded-lg border border-[var(--color-divider)] bg-[var(--color-surface)] p-4"
         >
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 text-sm">
             {guideSections.map(section => (
               <li key={section.id}>
                 <a
                   href={`#${section.id}`}
-                  className="text-amber-800 dark:text-amber-300 hover:underline"
+                  className="text-[var(--color-accent)] hover:underline"
                 >
                   {section.title}
                 </a>
@@ -55,10 +55,10 @@ export default function GuideContent() {
         <div className="space-y-10">
           {guideSections.map(section => (
             <section key={section.id} id={section.id}>
-              <h2 className="text-lg font-semibold text-amber-800 dark:text-amber-300 mb-2">
+              <h2 className="text-lg font-semibold text-[var(--color-accent)] mb-2">
                 {section.title}
               </h2>
-              <div className="space-y-3 text-sm text-zinc-900 dark:text-zinc-100">
+              <div className="space-y-3 text-sm text-[var(--color-text)]">
                 {section.blocks.map((block, i) =>
                   block.type === 'paragraph' ? (
                     <p key={i}>{block.text}</p>
