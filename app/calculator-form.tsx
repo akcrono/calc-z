@@ -57,7 +57,7 @@ export default function CalculatorForm() {
   const result = validation.valid ? calculate({ rate, amount, needed }) : null;
 
   const showRateError = rateInput !== '' && !validation.valid;
-  const alreadyReached = leftover <= 0 && (amountInput !== '' || neededInput !== '');
+  const alreadyReached = neededInput !== '' && leftover <= 0;
   const hasResult = validation.valid && result !== null && leftover > 0;
 
   const marginLabel =
@@ -93,8 +93,9 @@ export default function CalculatorForm() {
       >
         <div className="flex gap-4 flex-wrap">
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
+            <label htmlFor="storage" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
             <input
+              id="storage"
               type="number"
               min="0"
               step="any"
@@ -105,8 +106,9 @@ export default function CalculatorForm() {
             />
           </div>
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
+            <label htmlFor="target" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
             <input
+              id="target"
               type="number"
               min="0"
               step="any"
@@ -117,8 +119,9 @@ export default function CalculatorForm() {
             />
           </div>
           <div className="flex-1 basis-[200px]">
-            <label className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
+            <label htmlFor="rate" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
             <input
+              id="rate"
               type="number"
               min="0"
               step="any"
@@ -135,13 +138,15 @@ export default function CalculatorForm() {
           </div>
         </div>
 
-        <div
-          className="h-px my-1"
-          style={{
-            background:
-              'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
-          }}
-        />
+        {(hasResult || alreadyReached) && (
+          <div
+            className="h-px my-1"
+            style={{
+              background:
+                'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
+            }}
+          />
+        )}
 
         {hasResult && result ? (
           <div className="flex gap-4 flex-wrap">

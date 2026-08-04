@@ -8,7 +8,7 @@ export default async function Page() {
 
   return (
     <main className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg)]">
-      <Suspense fallback={<div className="text-gray-500">{translations[initialLocale].loading}</div>}>
+      <Suspense fallback={<div className="text-[var(--color-text)] opacity-70">{translations[initialLocale].loading}</div>}>
         <CalculatorForm />
       </Suspense>
     </main>
