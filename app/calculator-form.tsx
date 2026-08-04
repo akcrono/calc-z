@@ -138,24 +138,24 @@ export default function CalculatorForm() {
           </div>
         </div>
 
-        {(hasResult || alreadyReached) && (
-          <div
-            className="h-px my-1"
-            style={{
-              background:
-                'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
-            }}
-          />
-        )}
+        <div
+          className="h-px my-1"
+          style={{
+            background:
+              'linear-gradient(to right, transparent, var(--color-divider) 48px, var(--color-divider) calc(100% - 48px), transparent)',
+          }}
+        />
 
-        {hasResult && result ? (
+        {alreadyReached ? (
+          <p className="text-sm opacity-85 text-[var(--color-text)]">{t.alreadyReachedMessage}</p>
+        ) : (
           <div className="flex gap-4 flex-wrap">
             <div className="flex-1 basis-[160px]">
               <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
                 {t.timeUntilTargetLabel}
               </div>
               <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
-                {formatDuration(result.hoursLeft)}
+                {hasResult && result ? formatDuration(result.hoursLeft) : '—'}
               </h3>
             </div>
             <div className="flex-1 basis-[160px]">
@@ -163,25 +163,29 @@ export default function CalculatorForm() {
                 {t.timeUntilResetLabel}
               </div>
               <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
-                {formatDuration(result.hoursBeforeReset)}
+                {hasResult && result ? formatDuration(result.hoursBeforeReset) : '—'}
               </h3>
             </div>
             <div className="flex-1 basis-[160px]">
               <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
                 {t.resetVerdictLabel}
               </div>
-              <div
-                className="inline-block text-[13px] font-medium px-3 py-1 rounded-[var(--radius-sm)]"
-                style={{ background: verdictBg, color: verdictColor }}
-              >
-                {result.readyRelation === 'after' ? t.readyAfter : t.readyBefore}
-              </div>
-              <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{marginLabel}</div>
+              {hasResult && result ? (
+                <>
+                  <div
+                    className="inline-block text-[13px] font-medium px-3 py-1 rounded-[var(--radius-sm)]"
+                    style={{ background: verdictBg, color: verdictColor }}
+                  >
+                    {result.readyRelation === 'after' ? t.readyAfter : t.readyBefore}
+                  </div>
+                  <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{marginLabel}</div>
+                </>
+              ) : (
+                <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">—</h3>
+              )}
             </div>
           </div>
-        ) : alreadyReached ? (
-          <p className="text-sm opacity-85 text-[var(--color-text)]">{t.alreadyReachedMessage}</p>
-        ) : null}
+        )}
       </div>
 
       <div className="mt-8">
