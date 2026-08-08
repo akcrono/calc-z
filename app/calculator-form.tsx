@@ -34,6 +34,10 @@ export default function CalculatorForm() {
     return Number.isFinite(n) ? n : 0;
   }
 
+  function handleSelectAll(e: React.MouseEvent<HTMLInputElement>) {
+    e.currentTarget.select();
+  }
+
   function handleRateChange(value: string) {
     setRateInput(value);
     updateParams(value, amountInput, neededInput);
@@ -106,6 +110,7 @@ export default function CalculatorForm() {
               placeholder={t.storagePlaceholder}
               value={amountInput}
               onChange={e => handleAmountChange(e.target.value)}
+              onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
           </div>
@@ -119,6 +124,7 @@ export default function CalculatorForm() {
               placeholder={t.targetPlaceholder}
               value={neededInput}
               onChange={e => handleNeededChange(e.target.value)}
+              onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
           </div>
@@ -132,6 +138,7 @@ export default function CalculatorForm() {
               placeholder={t.ratePlaceholder}
               value={rateInput}
               onChange={e => handleRateChange(e.target.value)}
+              onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
             {showRateError && (
