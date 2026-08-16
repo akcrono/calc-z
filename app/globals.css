@@ -11,6 +11,12 @@
   --color-accent-300: #d2cefd;
   --color-neutral-800: #3f424d;
   --color-neutral-100: #f3f5fe;
+  --color-success: #7fc493;
+  --color-success-800: #2c4735;
+  --color-success-100: #eafaf0;
+  --color-danger: #e08585;
+  --color-danger-800: #55302f;
+  --color-danger-100: #fdeeee;
   --color-divider: rgba(233, 233, 237, 0.16);
   --radius-md: 8px;
   --radius-sm: 6px;

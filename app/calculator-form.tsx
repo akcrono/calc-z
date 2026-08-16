@@ -75,8 +75,8 @@ export default function CalculatorForm() {
         ? t.marginToSpare.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
         : t.marginMissesBy.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
       : '';
-  const verdictBg = result?.readyRelation === 'before' ? 'var(--color-accent-800)' : 'var(--color-neutral-800)';
-  const verdictColor = result?.readyRelation === 'before' ? 'var(--color-accent-100)' : 'var(--color-neutral-100)';
+  const verdictBg = result?.readyRelation === 'before' ? 'var(--color-success-800)' : 'var(--color-danger-800)';
+  const verdictColor = result?.readyRelation === 'before' ? 'var(--color-success-100)' : 'var(--color-danger-100)';
 
   return (
     <div className="relative w-full max-w-[760px]">
