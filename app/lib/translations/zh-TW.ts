@@ -13,6 +13,7 @@ const zhTW: Translations = {
   readyBefore: '重置前',
   readyAfter: '重置後',
   rateError: '請輸入大於 0 的數值。',
+  dailyRateHint: '約每天 {amount}',
   languageLabel: '語言',
   guideLinkLabel: '遊戲攻略',
   guideBackLink: '← 返回計算機',

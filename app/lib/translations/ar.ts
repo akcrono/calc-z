@@ -13,6 +13,7 @@ const ar: Translations = {
   readyBefore: 'قبل إعادة التعيين',
   readyAfter: 'بعد إعادة التعيين',
   rateError: 'أدخل معدلاً أكبر من 0.',
+  dailyRateHint: '≈ {amount} في اليوم',
   languageLabel: 'اللغة',
   guideLinkLabel: 'أدلة اللعبة',
   guideBackLink: '← العودة إلى الحاسبة',

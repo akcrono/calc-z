@@ -14,7 +14,7 @@ export default function CalculatorForm() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   useLocalizedTitle(t.appTitle);
 
   const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
@@ -60,6 +60,10 @@ export default function CalculatorForm() {
 
   const validation = validateRate(rate);
   const result = validation.valid ? calculate({ rate, amount, needed }) : null;
+
+  const dailyRate = validation.valid ? rate * 24 : null;
+  const dailyRateHint =
+    dailyRate !== null ? t.dailyRateHint.replace('{amount}', Math.round(dailyRate).toLocaleString(locale)) : '';
 
   const showRateError = rateInput !== '' && !validation.valid;
   const alreadyReached = neededInput !== '' && leftover <= 0;
@@ -141,11 +145,13 @@ export default function CalculatorForm() {
               onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
-            {showRateError && (
+            {showRateError ? (
               <div className="text-xs mt-[5px]" style={{ color: 'var(--color-accent-300)' }}>
                 {t.rateError}
               </div>
-            )}
+            ) : dailyRate !== null ? (
+              <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{dailyRateHint}</div>
+            ) : null}
           </div>
         </div>
 

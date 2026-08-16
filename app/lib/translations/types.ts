@@ -11,6 +11,7 @@ export interface Translations {
   readyBefore: string;
   readyAfter: string;
   rateError: string;
+  dailyRateHint: string;
   languageLabel: string;
   guideLinkLabel: string;
   guideBackLink: string;

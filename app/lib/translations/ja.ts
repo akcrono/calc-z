@@ -13,6 +13,7 @@ const ja: Translations = {
   readyBefore: 'リセット前',
   readyAfter: 'リセット後',
   rateError: '0より大きい値を入力してください。',
+  dailyRateHint: '1日あたり約{amount}',
   languageLabel: '言語',
   guideLinkLabel: 'ゲームガイド',
   guideBackLink: '← 計算機に戻る',

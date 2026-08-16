@@ -13,6 +13,7 @@ const en: Translations = {
   readyBefore: 'Before reset',
   readyAfter: 'After reset',
   rateError: 'Enter a rate greater than 0.',
+  dailyRateHint: '≈ {amount} per day',
   languageLabel: 'Language',
   guideLinkLabel: 'Gameplay Guides',
   guideBackLink: '← Back to calculator',

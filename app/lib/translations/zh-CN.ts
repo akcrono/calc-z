@@ -13,6 +13,7 @@ const zhCN: Translations = {
   readyBefore: '重置前',
   readyAfter: '重置后',
   rateError: '请输入大于 0 的数值。',
+  dailyRateHint: '约每天 {amount}',
   languageLabel: '语言',
   guideLinkLabel: '游戏攻略',
   guideBackLink: '← 返回计算器',

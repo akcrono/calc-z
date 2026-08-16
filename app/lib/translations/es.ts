@@ -13,6 +13,7 @@ const es: Translations = {
   readyBefore: 'Antes del reinicio',
   readyAfter: 'Después del reinicio',
   rateError: 'Introduce una tasa mayor que 0.',
+  dailyRateHint: '≈ {amount} al día',
   languageLabel: 'Idioma',
   guideLinkLabel: 'Guías de juego',
   guideBackLink: '← Volver a la calculadora',
