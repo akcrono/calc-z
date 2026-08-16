@@ -14,6 +14,7 @@ const en: Translations = {
   readyAfter: 'After reset',
   rateError: 'Enter a rate greater than 0.',
   dailyRateHint: '≈ {amount} per day',
+  predatorsCheckboxLabel: 'Include two predators at level {level}',
   languageLabel: 'Language',
   guideLinkLabel: 'Gameplay Guides',
   guideBackLink: '← Back to calculator',

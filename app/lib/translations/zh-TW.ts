@@ -14,6 +14,7 @@ const zhTW: Translations = {
   readyAfter: '重置後',
   rateError: '請輸入大於 0 的數值。',
   dailyRateHint: '約每天 {amount}',
+  predatorsCheckboxLabel: '包含兩隻 {level} 級掠食者',
   languageLabel: '語言',
   guideLinkLabel: '遊戲攻略',
   guideBackLink: '← 返回計算機',

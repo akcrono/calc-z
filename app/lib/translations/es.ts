@@ -14,6 +14,7 @@ const es: Translations = {
   readyAfter: 'Después del reinicio',
   rateError: 'Introduce una tasa mayor que 0.',
   dailyRateHint: '≈ {amount} al día',
+  predatorsCheckboxLabel: 'Incluir dos depredadores de nivel {level}',
   languageLabel: 'Idioma',
   guideLinkLabel: 'Guías de juego',
   guideBackLink: '← Volver a la calculadora',

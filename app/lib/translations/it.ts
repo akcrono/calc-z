@@ -14,6 +14,7 @@ const it: Translations = {
   readyAfter: 'Dopo il reset',
   rateError: 'Inserisci un tasso maggiore di 0.',
   dailyRateHint: '≈ {amount} al giorno',
+  predatorsCheckboxLabel: 'Includi due predatori di livello {level}',
   languageLabel: 'Lingua',
   guideLinkLabel: 'Guide di gioco',
   guideBackLink: '← Torna al calcolatore',

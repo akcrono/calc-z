@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
-import { calculate, validateRate } from './lib/calc';
+import { calculate, validateRate, PREDATOR_YIELDS, PREDATOR_LEVELS, type PredatorLevel } from './lib/calc';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import { formatDuration } from './lib/format-duration';
 import LanguageSwitcher from './language-switcher';
@@ -20,12 +20,27 @@ export default function CalculatorForm() {
   const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
   const [amountInput, setAmountInput] = useState(() => searchParams.get('amount') ?? '');
   const [neededInput, setNeededInput] = useState(() => searchParams.get('needed') ?? '');
+  const [includePredators, setIncludePredators] = useState(() => searchParams.get('predators') === '1');
+  const [predatorLevel, setPredatorLevel] = useState<PredatorLevel>(() => {
+    const level = Number(searchParams.get('predatorLevel'));
+    return PREDATOR_LEVELS.includes(level as PredatorLevel) ? (level as PredatorLevel) : 180;
+  });
 
-  function updateParams(rate: string, amount: string, needed: string) {
+  function updateParams(
+    rate: string,
+    amount: string,
+    needed: string,
+    predators: boolean,
+    level: PredatorLevel
+  ) {
     const params = new URLSearchParams();
     if (rate) params.set('rate', rate);
     if (amount) params.set('amount', amount);
     if (needed) params.set('needed', needed);
+    if (predators) {
+      params.set('predators', '1');
+      params.set('predatorLevel', String(level));
+    }
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 
@@ -40,21 +55,32 @@ export default function CalculatorForm() {
 
   function handleRateChange(value: string) {
     setRateInput(value);
-    updateParams(value, amountInput, neededInput);
+    updateParams(value, amountInput, neededInput, includePredators, predatorLevel);
   }
 
   function handleAmountChange(value: string) {
     setAmountInput(value);
-    updateParams(rateInput, value, neededInput);
+    updateParams(rateInput, value, neededInput, includePredators, predatorLevel);
   }
 
   function handleNeededChange(value: string) {
     setNeededInput(value);
-    updateParams(rateInput, amountInput, value);
+    updateParams(rateInput, amountInput, value, includePredators, predatorLevel);
+  }
+
+  function handleIncludePredatorsChange(value: boolean) {
+    setIncludePredators(value);
+    updateParams(rateInput, amountInput, neededInput, value, predatorLevel);
+  }
+
+  function handlePredatorLevelChange(value: PredatorLevel) {
+    setPredatorLevel(value);
+    updateParams(rateInput, amountInput, neededInput, includePredators, value);
   }
 
   const rate = Number(rateInput);
-  const amount = parseOrZero(amountInput);
+  const predatorBonus = includePredators ? PREDATOR_YIELDS[predatorLevel] * 2 : 0;
+  const amount = parseOrZero(amountInput) + predatorBonus;
   const needed = parseOrZero(neededInput);
   const leftover = needed - amount;
 
@@ -77,6 +103,8 @@ export default function CalculatorForm() {
       : '';
   const verdictBg = result?.readyRelation === 'before' ? 'var(--color-success-800)' : 'var(--color-danger-800)';
   const verdictColor = result?.readyRelation === 'before' ? 'var(--color-success-100)' : 'var(--color-danger-100)';
+
+  const [predatorsLabelPrefix, predatorsLabelSuffix] = t.predatorsCheckboxLabel.split('{level}');
 
   return (
     <div className="relative w-full max-w-[760px]">
@@ -145,12 +173,42 @@ export default function CalculatorForm() {
               onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
+          </div>
+        </div>
+
+        <div className="flex gap-4 flex-wrap items-start">
+          <div className="flex-[2] basis-[416px] flex items-center gap-2 text-sm text-[var(--color-text)]">
+            <input
+              id="include-predators"
+              type="checkbox"
+              checked={includePredators}
+              onChange={e => handleIncludePredatorsChange(e.target.checked)}
+              className="h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] accent-[var(--color-accent)]"
+            />
+            <label htmlFor="include-predators" className="flex flex-wrap items-center gap-2">
+              <span>{predatorsLabelPrefix}</span>
+              <select
+                value={predatorLevel}
+                onChange={e => handlePredatorLevelChange(Number(e.target.value) as PredatorLevel)}
+                disabled={!includePredators}
+                className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+              >
+                {PREDATOR_LEVELS.map(level => (
+                  <option key={level} value={level}>
+                    {level}
+                  </option>
+                ))}
+              </select>
+              {predatorsLabelSuffix && <span>{predatorsLabelSuffix}</span>}
+            </label>
+          </div>
+          <div className="flex-1 basis-[200px]">
             {showRateError ? (
-              <div className="text-xs mt-[5px]" style={{ color: 'var(--color-accent-300)' }}>
+              <div className="text-xs" style={{ color: 'var(--color-accent-300)' }}>
                 {t.rateError}
               </div>
             ) : dailyRate !== null ? (
-              <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{dailyRateHint}</div>
+              <div className="text-xs opacity-70 text-[var(--color-text)]">{dailyRateHint}</div>
             ) : null}
           </div>
         </div>

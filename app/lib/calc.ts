@@ -14,6 +14,16 @@ export function nextReset(now: Date = new Date()): Date {
   return reset;
 }
 
+/** Fernleaf yield from a single predator kill, by predator level. Players
+ * can kill this enemy up to twice a day; only these levels exist. */
+export const PREDATOR_YIELDS: Record<180 | 190 | 200, number> = {
+  180: 68000,
+  190: 72000,
+  200: 76000,
+};
+export type PredatorLevel = keyof typeof PREDATOR_YIELDS;
+export const PREDATOR_LEVELS = Object.keys(PREDATOR_YIELDS).map(Number) as PredatorLevel[];
+
 export interface CalcInput {
   rate: number;
   amount: number;
