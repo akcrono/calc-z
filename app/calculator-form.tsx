@@ -3,9 +3,11 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
+import { NumberFormatBase } from 'react-number-format';
 import { calculate, validateRate, PREDATOR_YIELDS, PREDATOR_LEVELS, type PredatorLevel } from './lib/calc';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import { formatDuration } from './lib/format-duration';
+import { groupDigits, stripToDigits } from './lib/format-number';
 import LanguageSwitcher from './language-switcher';
 import GuideBanner from './guide-banner';
 import Emblem from './emblem';
@@ -20,6 +22,11 @@ export default function CalculatorForm() {
   const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
   const [amountInput, setAmountInput] = useState(() => searchParams.get('amount') ?? '');
   const [neededInput, setNeededInput] = useState(() => searchParams.get('needed') ?? '');
+  // Which of the three number fields (if any) is currently focused — comma
+  // grouping is only applied to a field while it's NOT the focused one, so
+  // the displayed value never diverges from what's actually being typed
+  // (see format-number.ts for why that matters for undo/redo).
+  const [focusedField, setFocusedField] = useState<'amount' | 'needed' | 'rate' | null>(null);
   const [includePredators, setIncludePredators] = useState(() => searchParams.get('predators') === '1');
   const [predatorLevel, setPredatorLevel] = useState<PredatorLevel>(() => {
     const level = Number(searchParams.get('predatorLevel'));
@@ -134,42 +141,48 @@ export default function CalculatorForm() {
         <div className="flex gap-4 flex-wrap">
           <div className="flex-1 basis-[200px]">
             <label htmlFor="storage" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
-            <input
+            <NumberFormatBase
               id="storage"
-              type="number"
-              min="0"
-              step="any"
+              inputMode="numeric"
               placeholder={t.storagePlaceholder}
               value={amountInput}
-              onChange={e => handleAmountChange(e.target.value)}
+              format={value => (focusedField === 'amount' ? value : groupDigits(value))}
+              removeFormatting={value => stripToDigits(value)}
+              onValueChange={values => handleAmountChange(values.value)}
+              onFocus={() => setFocusedField('amount')}
+              onBlur={() => setFocusedField(null)}
               onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
           </div>
           <div className="flex-1 basis-[200px]">
             <label htmlFor="target" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
-            <input
+            <NumberFormatBase
               id="target"
-              type="number"
-              min="0"
-              step="any"
+              inputMode="numeric"
               placeholder={t.targetPlaceholder}
               value={neededInput}
-              onChange={e => handleNeededChange(e.target.value)}
+              format={value => (focusedField === 'needed' ? value : groupDigits(value))}
+              removeFormatting={value => stripToDigits(value)}
+              onValueChange={values => handleNeededChange(values.value)}
+              onFocus={() => setFocusedField('needed')}
+              onBlur={() => setFocusedField(null)}
               onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
           </div>
           <div className="flex-1 basis-[200px]">
             <label htmlFor="rate" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
-            <input
+            <NumberFormatBase
               id="rate"
-              type="number"
-              min="0"
-              step="any"
+              inputMode="numeric"
               placeholder={t.ratePlaceholder}
               value={rateInput}
-              onChange={e => handleRateChange(e.target.value)}
+              format={value => (focusedField === 'rate' ? value : groupDigits(value))}
+              removeFormatting={value => stripToDigits(value)}
+              onValueChange={values => handleRateChange(values.value)}
+              onFocus={() => setFocusedField('rate')}
+              onBlur={() => setFocusedField(null)}
               onClick={handleSelectAll}
               className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
             />
