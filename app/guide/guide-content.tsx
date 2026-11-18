@@ -15,7 +15,7 @@ export default function GuideContent() {
   const guideSections = guideSectionsByLocale[locale];
 
   return (
-    <main dir={dir} className="min-h-screen p-4 bg-[var(--color-bg)]">
+    <main dir={dir} className="min-h-screen p-4">
       <div className="relative mx-auto max-w-2xl py-8">
         <LanguageSwitcher />
 
@@ -55,7 +55,7 @@ export default function GuideContent() {
         <div className="space-y-10">
           {guideSections.map(section => (
             <section key={section.id} id={section.id}>
-              <h2 className="text-lg font-semibold text-[var(--color-accent)] mb-2">
+              <h2 className="font-display text-xl font-medium tracking-[0.01em] text-[var(--color-accent)] mb-2">
                 {section.title}
               </h2>
               <div className="space-y-3 text-sm text-[var(--color-text)]">

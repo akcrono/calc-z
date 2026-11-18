@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const ar: Translations = {
-  appTitle: 'حاسبة أوراق السرخس - لاست Z',
-  appDescription: 'احسب الساعات اللازمة للوصول إلى هدفك من أوراق السرخس في Last Z: Survival Shooter.',
+  appTitle: 'حاسبة الماء المقدس - لاست Z',
+  appDescription: 'احسب الساعات اللازمة للوصول إلى هدفك من الماء المقدس في Last Z: Survival Shooter.',
   loading: 'جارٍ التحميل…',
-  rateLabel: 'أوراق السرخس في الساعة',
-  amountLabel: 'أوراق السرخس المخزّنة',
+  rateLabel: 'الماء المقدس في الساعة',
+  amountLabel: 'الماء المقدس المخزّن',
   neededLabel: 'الإجمالي اللازم للترقية التالية',
   timeUntilTargetLabel: 'الوقت المتبقي للوصول إلى الهدف',
   timeUntilResetLabel: 'الوقت المتبقي حتى إعادة التعيين',
@@ -23,8 +23,8 @@ const ar: Translations = {
   guideDescription:
     'نصائح استراتيجية وقوائم أولويات لـ Last Z: الشاحنات، المكافآت، المتاجر، ساحة معركة الأبطال، والمزيد.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'حاسبة أوراق السرخس',
-  calculatorSubhead: 'أدخل معدل حصولك على أوراق السرخس لمعرفة الوقت الدقيق الذي ستصل فيه إلى ترقيتك التالية.',
+  calculatorHeading: 'حاسبة الماء المقدس',
+  calculatorSubhead: 'أدخل معدل حصولك على الماء المقدس لمعرفة الوقت الدقيق الذي ستصل فيه إلى ترقيتك التالية.',
   storagePlaceholder: 'مثال: 4300',
   targetPlaceholder: 'مثال: 25000',
   ratePlaceholder: 'مثال: 120',

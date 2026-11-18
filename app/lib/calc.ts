@@ -14,8 +14,9 @@ export function nextReset(now: Date = new Date()): Date {
   return reset;
 }
 
-/** Fernleaf yield from a single predator kill, by predator level. Players
- * can kill this enemy up to twice a day; only these levels exist. */
+/** Seasonal-resource yield from a single predator kill, by predator level.
+ * Measured during the fernleaf season. Players can kill this enemy up to
+ * twice a day; only these levels exist. */
 export const PREDATOR_YIELDS: Record<180 | 190 | 200, number> = {
   180: 68000,
   190: 72000,

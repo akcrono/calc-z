@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const zhCN: Translations = {
-  appTitle: 'Last Z 蕨叶计算器',
-  appDescription: '计算在 Last Z: Survival Shooter 中达到蕨叶目标所需的时间。',
+  appTitle: 'Last Z 圣水计算器',
+  appDescription: '计算在 Last Z: Survival Shooter 中达到圣水目标所需的时间。',
   loading: '加载中…',
-  rateLabel: '每小时蕨叶数',
-  amountLabel: '库存蕨叶数',
+  rateLabel: '每小时圣水量',
+  amountLabel: '库存圣水量',
   neededLabel: '下次升级所需总量',
   timeUntilTargetLabel: '距离目标的时间',
   timeUntilResetLabel: '距离重置的时间',
@@ -22,8 +22,8 @@ const zhCN: Translations = {
   guideTocLabel: '目录',
   guideDescription: 'Last Z 攻略技巧与优先级列表：卡车、悬赏、商店、英雄战场等。',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: '蕨叶计算器',
-  calculatorSubhead: '输入你的蕨叶获取速率，即可准确知道何时能达成下一次升级。',
+  calculatorHeading: '圣水计算器',
+  calculatorSubhead: '输入你的圣水获取速率，即可准确知道何时能达成下一次升级。',
   storagePlaceholder: '例如 4300',
   targetPlaceholder: '例如 25000',
   ratePlaceholder: '例如 120',

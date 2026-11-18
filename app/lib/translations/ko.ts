@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const ko: Translations = {
-  appTitle: '라스트 Z 고사리 계산기',
-  appDescription: 'Last Z: Survival Shooter에서 고사리 목표에 도달하는 데 걸리는 시간을 계산합니다.',
+  appTitle: '라스트 Z 성수 계산기',
+  appDescription: 'Last Z: Survival Shooter에서 성수 목표에 도달하는 데 걸리는 시간을 계산합니다.',
   loading: '로딩 중…',
-  rateLabel: '시간당 고사리 잎',
-  amountLabel: '보유 중인 고사리 잎',
+  rateLabel: '시간당 성수',
+  amountLabel: '보유 중인 성수',
   neededLabel: '다음 업그레이드에 필요한 총량',
   timeUntilTargetLabel: '목표까지 남은 시간',
   timeUntilResetLabel: '리셋까지 남은 시간',
@@ -22,8 +22,8 @@ const ko: Translations = {
   guideTocLabel: '목차',
   guideDescription: 'Last Z 전략 팁과 우선순위 목록: 트럭, 현상수배, 상점, 영웅 전장 등.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: '고사리 계산기',
-  calculatorSubhead: '고사리 획득 속도를 입력하면 다음 업그레이드에 도달하는 정확한 시점을 확인할 수 있습니다.',
+  calculatorHeading: '성수 계산기',
+  calculatorSubhead: '성수 획득 속도를 입력하면 다음 업그레이드에 도달하는 정확한 시점을 확인할 수 있습니다.',
   storagePlaceholder: '예: 4300',
   targetPlaceholder: '예: 25000',
   ratePlaceholder: '예: 120',

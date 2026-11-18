@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const en: Translations = {
-  appTitle: 'Last Z Fern Calculator',
-  appDescription: 'Calculate hours to reach your fern target in Last Z: Survival Shooter.',
+  appTitle: 'Last Z Holy Water Calculator',
+  appDescription: 'Calculate hours to reach your Holy Water target in Last Z: Survival Shooter.',
   loading: 'Loading…',
-  rateLabel: 'Fernleafs per hour',
-  amountLabel: 'Fernleafs in storage',
+  rateLabel: 'Holy Water per hour',
+  amountLabel: 'Holy Water in storage',
   neededLabel: 'Total needed for next upgrade',
   timeUntilTargetLabel: 'Time until target',
   timeUntilResetLabel: 'Time until reset',
@@ -23,8 +23,8 @@ const en: Translations = {
   guideDescription:
     'Strategy tips and priority lists for Last Z: trucks, bounties, shops, hero battlefield, and more.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Fern calculator',
-  calculatorSubhead: "Enter your fernleaf rate to see exactly when you'll hit your next upgrade.",
+  calculatorHeading: 'Holy Water calculator',
+  calculatorSubhead: "Enter your Holy Water rate to see exactly when you'll hit your next upgrade.",
   storagePlaceholder: 'e.g. 4300',
   targetPlaceholder: 'e.g. 25000',
   ratePlaceholder: 'e.g. 120',

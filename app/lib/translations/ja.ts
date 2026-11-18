@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const ja: Translations = {
-  appTitle: 'ラストZ シダ計算機',
-  appDescription: 'Last Z: Survival Shooterでシダの目標に到達するまでの時間を計算します。',
+  appTitle: 'ラストZ 聖水計算機',
+  appDescription: 'Last Z: Survival Shooterで聖水の目標に到達するまでの時間を計算します。',
   loading: '読み込み中…',
-  rateLabel: '1時間あたりのシダの葉',
-  amountLabel: '保有しているシダの葉',
+  rateLabel: '1時間あたりの聖水',
+  amountLabel: '保有している聖水',
   neededLabel: '次のアップグレードに必要な合計',
   timeUntilTargetLabel: '目標までの時間',
   timeUntilResetLabel: 'リセットまでの時間',
@@ -23,8 +23,8 @@ const ja: Translations = {
   guideDescription:
     'Last Zの戦略のコツと優先順位リスト:トラック、バウンティ、ショップ、ヒーローバトルフィールドなど。',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'シダ計算機',
-  calculatorSubhead: 'シダの獲得速度を入力すると、次のアップグレードに到達する正確なタイミングがわかります。',
+  calculatorHeading: '聖水計算機',
+  calculatorSubhead: '聖水の獲得速度を入力すると、次のアップグレードに到達する正確なタイミングがわかります。',
   storagePlaceholder: '例: 4300',
   targetPlaceholder: '例: 25000',
   ratePlaceholder: '例: 120',

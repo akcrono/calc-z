@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Oswald } from "next/font/google";
 import { translations } from "./lib/translations";
 import { detectLocale } from "./lib/locale-server";
 import { LocaleProvider } from "./lib/locale-context";
@@ -9,6 +9,12 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const oswald = Oswald({
+  variable: "--font-oswald",
+  subsets: ["latin"],
+  weight: ["500", "600"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,7 +35,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLocale}
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>

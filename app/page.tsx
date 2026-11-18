@@ -7,7 +7,7 @@ export default async function Page() {
   const initialLocale = await detectLocale();
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-4 bg-[var(--color-bg)]">
+    <main className="min-h-screen flex items-center justify-center p-4">
       <Suspense fallback={<div className="text-[var(--color-text)] opacity-70">{translations[initialLocale].loading}</div>}>
         <CalculatorForm />
       </Suspense>

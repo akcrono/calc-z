@@ -1,11 +1,11 @@
 import type { Translations } from './types';
 
 const it: Translations = {
-  appTitle: 'Calcolatore di Felci di Last Z',
-  appDescription: 'Calcola le ore per raggiungere il tuo obiettivo di felci in Last Z: Survival Shooter.',
+  appTitle: 'Calcolatore di Acqua Santa di Last Z',
+  appDescription: 'Calcola le ore per raggiungere il tuo obiettivo di acqua santa in Last Z: Survival Shooter.',
   loading: 'Caricamento…',
-  rateLabel: "Foglie di felce all'ora",
-  amountLabel: 'Foglie di felce in magazzino',
+  rateLabel: "Acqua santa all'ora",
+  amountLabel: 'Acqua santa in magazzino',
   neededLabel: 'Totale necessario per il prossimo potenziamento',
   timeUntilTargetLabel: "Tempo all'obiettivo",
   timeUntilResetLabel: 'Tempo al reset',
@@ -23,8 +23,8 @@ const it: Translations = {
   guideDescription:
     'Consigli strategici ed elenchi di priorità per Last Z: camion, taglie, negozi, campo di battaglia degli eroi e altro ancora.',
   heroEyebrow: 'Last Z: Survival Shooter',
-  calculatorHeading: 'Calcolatore di felci',
-  calculatorSubhead: 'Inserisci il tuo tasso di felci per vedere esattamente quando raggiungerai il tuo prossimo potenziamento.',
+  calculatorHeading: 'Calcolatore di acqua santa',
+  calculatorSubhead: 'Inserisci il tuo tasso di acqua santa per vedere esattamente quando raggiungerai il tuo prossimo potenziamento.',
   storagePlaceholder: 'es. 4300',
   targetPlaceholder: 'es. 25000',
   ratePlaceholder: 'es. 120',

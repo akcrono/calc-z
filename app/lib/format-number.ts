@@ -7,7 +7,7 @@ export function stripToDigits(value: string): string {
 
 /** Adds comma thousands separators to a digit-only string, e.g.
  * "4300" -> "4,300". Always uses US-style grouping regardless of the
- * app's active locale — fernleaf counts aren't a localized quantity, and
+ * app's active locale — Holy Water counts aren't a localized quantity, and
  * a fixed separator avoids "," meaning thousands in some languages and
  * decimal in others.
  *

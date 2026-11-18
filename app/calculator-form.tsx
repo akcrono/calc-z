@@ -116,17 +116,23 @@ export default function CalculatorForm() {
   return (
     <div className="relative w-full max-w-[760px]">
       <LanguageSwitcher />
-      <span className="font-medium text-[var(--color-text)]">{t.appTitle}</span>
+      <span className="font-display text-lg font-medium tracking-[0.02em] text-[var(--color-accent)]">{t.appTitle}</span>
 
       <div className="mt-8 flex items-center justify-between gap-6">
         <div>
           <div
-            className="inline-block text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
-            style={{ background: 'var(--color-accent-800)', color: 'var(--color-accent-100)' }}
+            className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
+            style={{ background: 'var(--color-crimson)', color: 'var(--color-accent-100)' }}
           >
+            <svg viewBox="0 0 16 16" className="h-3 w-3 shrink-0" fill="currentColor" aria-hidden="true">
+              <path d="M10.5 1.5a6.5 6.5 0 1 0 4 11.6A7 7 0 0 1 10.5 1.5Z" />
+            </svg>
             {t.heroEyebrow}
           </div>
-          <h1 className="text-[42px] leading-[1.12] tracking-[-0.015em] font-medium text-[var(--color-text)]">
+          <h1
+            className="font-display text-[46px] leading-[1.08] tracking-[0.005em] font-semibold text-[var(--color-accent)]"
+            style={{ textShadow: '0 2px 12px rgba(0, 0, 0, 0.55)' }}
+          >
             {t.calculatorHeading}
           </h1>
           <p className="text-[var(--color-text)] opacity-70 max-w-[46ch] mb-8 mt-2">{t.calculatorSubhead}</p>
