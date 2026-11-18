@@ -4,7 +4,14 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
 import { NumberFormatBase } from 'react-number-format';
-import { calculate, validateRate, PREDATOR_YIELDS, PREDATOR_LEVELS, type PredatorLevel } from './lib/calc';
+import {
+  calculate,
+  validateRate,
+  PREDATOR_YIELDS,
+  PREDATOR_LEVELS,
+  PREDATORS_AVAILABLE,
+  type PredatorLevel,
+} from './lib/calc';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import { formatDuration } from './lib/format-duration';
 import { groupDigits, stripToDigits } from './lib/format-number';
@@ -27,7 +34,11 @@ export default function CalculatorForm() {
   // the displayed value never diverges from what's actually being typed
   // (see format-number.ts for why that matters for undo/redo).
   const [focusedField, setFocusedField] = useState<'amount' | 'needed' | 'rate' | null>(null);
-  const [includePredators, setIncludePredators] = useState(() => searchParams.get('predators') === '1');
+  // Gated so an old shared link carrying ?predators=1 can't add a bonus the
+  // user has no visible way to turn off.
+  const [includePredators, setIncludePredators] = useState(
+    () => PREDATORS_AVAILABLE && searchParams.get('predators') === '1'
+  );
   const [predatorLevel, setPredatorLevel] = useState<PredatorLevel>(() => {
     const level = Number(searchParams.get('predatorLevel'));
     return PREDATOR_LEVELS.includes(level as PredatorLevel) ? (level as PredatorLevel) : 180;
@@ -141,7 +152,7 @@ export default function CalculatorForm() {
       </div>
 
       <div
-        className="rounded-lg p-6 flex flex-col gap-4"
+        className="@container rounded-lg p-6 flex flex-col gap-4"
         style={{ background: 'var(--color-surface)', boxShadow: 'var(--shadow-sm)' }}
       >
         <div className="flex gap-4 flex-wrap">
@@ -196,30 +207,40 @@ export default function CalculatorForm() {
         </div>
 
         <div className="flex gap-4 flex-wrap items-start">
-          <div className="flex-[2] basis-[416px] flex items-center gap-2 text-sm text-[var(--color-text)]">
-            <input
-              id="include-predators"
-              type="checkbox"
-              checked={includePredators}
-              onChange={e => handleIncludePredatorsChange(e.target.checked)}
-              className="h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] accent-[var(--color-accent)]"
-            />
-            <label htmlFor="include-predators" className="flex flex-wrap items-center gap-2">
-              <span>{predatorsLabelPrefix}</span>
-              <select
-                value={predatorLevel}
-                onChange={e => handlePredatorLevelChange(Number(e.target.value) as PredatorLevel)}
-                disabled={!includePredators}
-                className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
-              >
-                {PREDATOR_LEVELS.map(level => (
-                  <option key={level} value={level}>
-                    {level}
-                  </option>
-                ))}
-              </select>
-              {predatorsLabelSuffix && <span>{predatorsLabelSuffix}</span>}
-            </label>
+          {/* With predators hidden, this stays as an empty spacer so the
+              daily-rate hint lines up under the rate field. 632px is where
+              the three inputs above wrap (3 x 200px + 2 x 16px gaps); below
+              that the spacer would just add a blank row. */}
+          <div
+            className={`${PREDATORS_AVAILABLE ? 'flex' : 'hidden @min-[632px]:flex'} flex-[2] basis-[416px] items-center gap-2 text-sm text-[var(--color-text)]`}
+          >
+            {PREDATORS_AVAILABLE && (
+              <>
+                <input
+                  id="include-predators"
+                  type="checkbox"
+                  checked={includePredators}
+                  onChange={e => handleIncludePredatorsChange(e.target.checked)}
+                  className="h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] accent-[var(--color-accent)]"
+                />
+                <label htmlFor="include-predators" className="flex flex-wrap items-center gap-2">
+                  <span>{predatorsLabelPrefix}</span>
+                  <select
+                    value={predatorLevel}
+                    onChange={e => handlePredatorLevelChange(Number(e.target.value) as PredatorLevel)}
+                    disabled={!includePredators}
+                    className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+                  >
+                    {PREDATOR_LEVELS.map(level => (
+                      <option key={level} value={level}>
+                        {level}
+                      </option>
+                    ))}
+                  </select>
+                  {predatorsLabelSuffix && <span>{predatorsLabelSuffix}</span>}
+                </label>
+              </>
+            )}
           </div>
           <div className="flex-1 basis-[200px]">
             {showRateError ? (

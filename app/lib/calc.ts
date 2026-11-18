@@ -25,6 +25,11 @@ export const PREDATOR_YIELDS: Record<180 | 190 | 200, number> = {
 export type PredatorLevel = keyof typeof PREDATOR_YIELDS;
 export const PREDATOR_LEVELS = Object.keys(PREDATOR_YIELDS).map(Number) as PredatorLevel[];
 
+/** Predators haven't returned in the Holy Water season, so the option is
+ * hidden rather than offering a bonus that doesn't exist. Flip back on if
+ * the mechanic comes back. */
+export const PREDATORS_AVAILABLE = false;
+
 export interface CalcInput {
   rate: number;
   amount: number;
