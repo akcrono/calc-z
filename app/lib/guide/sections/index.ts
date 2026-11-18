@@ -7,6 +7,7 @@ import ja from './ja';
 import zhCN from './zh-CN';
 import zhTW from './zh-TW';
 import ar from './ar';
+import tr from './tr';
 
 export const guideSectionsByLocale: Record<Locale, typeof en> = {
   en,
@@ -17,6 +18,7 @@ export const guideSectionsByLocale: Record<Locale, typeof en> = {
   'zh-CN': zhCN,
   'zh-TW': zhTW,
   ar,
+  tr,
 };
 
 // Every locale must define the same sections, in the same order, under the

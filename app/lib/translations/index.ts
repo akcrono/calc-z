@@ -7,12 +7,13 @@ import ja from './ja';
 import zhCN from './zh-CN';
 import zhTW from './zh-TW';
 import ar from './ar';
+import tr from './tr';
 
 export type { Translations };
 
 // zh-CN listed before zh-TW deliberately: a bare "zh" prefix (no region)
 // in Accept-Language falls back to Simplified via the prefix match below.
-export const SUPPORTED_LOCALES = ['en', 'es', 'it', 'ko', 'ja', 'zh-CN', 'zh-TW', 'ar'] as const;
+export const SUPPORTED_LOCALES = ['en', 'es', 'it', 'ko', 'ja', 'zh-CN', 'zh-TW', 'ar', 'tr'] as const;
 export type Locale = (typeof SUPPORTED_LOCALES)[number];
 
 export const translations: Record<Locale, Translations> = {
@@ -24,6 +25,7 @@ export const translations: Record<Locale, Translations> = {
   'zh-CN': zhCN,
   'zh-TW': zhTW,
   ar,
+  tr,
 };
 
 /** Locales that read right-to-left. Consulted by LocaleProvider to set
@@ -33,7 +35,7 @@ export const RTL_LOCALES: ReadonlySet<Locale> = new Set(['ar']);
 /** Parses an Accept-Language header and returns the best-matching supported
  * locale: exact tag match first (e.g. `zh-TW`), then a same-language prefix
  * match (e.g. `ja-JP` -> `ja`), falling back to English. Doesn't attempt
- * IANA script subtags (zh-Hans/zh-Hant) - out of scope for 7 fixed locales.
+ * IANA script subtags (zh-Hans/zh-Hant) - out of scope for a small fixed locale list.
  * Uses header order, not q-values, to rank preferences — fine since browsers
  * already emit tags in descending-q order. */
 export function matchLocale(acceptLanguageHeader: string | null): Locale {

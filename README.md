@@ -15,7 +15,7 @@ The site also includes a gameplay guide with strategy tips and priority lists
 (trucks, bounties, shops, hero battlefield, and more).
 
 Available in English, Spanish, Italian, Korean, Japanese, Simplified Chinese,
-Traditional Chinese, and Arabic. The language is picked from your browser
+Traditional Chinese, Arabic, and Turkish. The language is picked from your browser
 settings and can be changed from the menu in the top corner.
 
 ## Running locally

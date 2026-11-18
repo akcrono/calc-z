@@ -131,7 +131,10 @@ export default function CalculatorForm() {
 
       <div className="mt-8 flex items-center justify-between gap-6">
         <div>
+          {/* The eyebrow is the game's English title in every locale; lang="en"
+              keeps uppercase from applying Turkish casing (i -> İ) to it. */}
           <div
+            lang="en"
             className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] px-[10px] py-[3px] rounded-[var(--radius-sm)] mb-3"
             style={{ background: 'var(--color-crimson)', color: 'var(--color-accent-100)' }}
           >
