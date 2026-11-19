@@ -1,13 +1,9 @@
-/** The game's daily reset always happens at 22:00 US Eastern time, regardless
- * of the player's own timezone. */
-const RESET_TIME_ZONE = 'America/New_York';
+/** The game's daily reset is pinned to UTC and ignores daylight saving time:
+ * 22:00 EDT in summer, 21:00 EST in winter. */
+const RESET_HOUR_UTC = 2;
 
 export function nextReset(now: Date = new Date()): Date {
-  const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-  const nyDate = new Date(now.toLocaleString('en-US', { timeZone: RESET_TIME_ZONE }));
-  const offsetMs = utcDate.getTime() - nyDate.getTime();
-
-  let reset = new Date(Date.UTC(nyDate.getFullYear(), nyDate.getMonth(), nyDate.getDate(), 22, 0, 0) + offsetMs);
+  let reset = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), RESET_HOUR_UTC));
   if (reset.getTime() <= now.getTime()) {
     reset = new Date(reset.getTime() + 24 * 60 * 60 * 1000);
   }
