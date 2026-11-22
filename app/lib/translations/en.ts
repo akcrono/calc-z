@@ -15,6 +15,7 @@ const en: Translations = {
   rateError: 'Enter a rate greater than 0.',
   dailyRateHint: '≈ {amount} per day',
   predatorsCheckboxLabel: 'Include two predators at level {level}',
+  quickObtainCheckboxLabel: 'Include {count} Quick Obtain uses',
   languageLabel: 'Language',
   guideLinkLabel: 'Gameplay Guides',
   guideBackLink: '← Back to calculator',

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
-import { translations } from "./lib/translations";
+import { translations, localeDirection } from "./lib/translations";
 import { detectLocale } from "./lib/locale-server";
 import { LocaleProvider } from "./lib/locale-context";
 import "./globals.css";
@@ -35,6 +35,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLocale}
+      dir={localeDirection(initialLocale)}
       className={`${inter.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">

@@ -28,9 +28,11 @@ export const translations: Record<Locale, Translations> = {
   tr,
 };
 
-/** Locales that read right-to-left. Consulted by LocaleProvider to set
- * `document.documentElement.dir` so layout mirrors correctly. */
-export const RTL_LOCALES: ReadonlySet<Locale> = new Set(['ar']);
+const RTL_LOCALES: ReadonlySet<Locale> = new Set(['ar']);
+
+export function localeDirection(locale: Locale): 'rtl' | 'ltr' {
+  return RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
+}
 
 /** Parses an Accept-Language header and returns the best-matching supported
  * locale: exact tag match first (e.g. `zh-TW`), then a same-language prefix

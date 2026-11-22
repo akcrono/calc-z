@@ -15,6 +15,7 @@ const ar: Translations = {
   rateError: 'أدخل معدلاً أكبر من 0.',
   dailyRateHint: '≈ {amount} في اليوم',
   predatorsCheckboxLabel: 'تضمين اثنين من المفترسات من المستوى {level}',
+  quickObtainCheckboxLabel: 'تضمين {count} استخدامات للحصول السريع',
   languageLabel: 'اللغة',
   guideLinkLabel: 'أدلة اللعبة',
   guideBackLink: '← العودة إلى الحاسبة',

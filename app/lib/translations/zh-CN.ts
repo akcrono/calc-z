@@ -15,6 +15,7 @@ const zhCN: Translations = {
   rateError: '请输入大于 0 的数值。',
   dailyRateHint: '约每天 {amount}',
   predatorsCheckboxLabel: '包含两只 {level} 级捕食者',
+  quickObtainCheckboxLabel: '包含 {count} 次快速获取',
   languageLabel: '语言',
   guideLinkLabel: '游戏攻略',
   guideBackLink: '← 返回计算器',

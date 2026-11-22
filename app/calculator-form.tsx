@@ -1,23 +1,48 @@
 'use client';
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
-import { NumberFormatBase } from 'react-number-format';
 import {
   calculate,
-  validateRate,
+  isValidRate,
   PREDATOR_YIELDS,
   PREDATOR_LEVELS,
   PREDATORS_AVAILABLE,
+  QUICK_OBTAIN_USES_PER_DAY,
+  quickObtainBonus,
   type PredatorLevel,
 } from './lib/calc';
+import { formStateFromParams, formStateToQuery, type FormState } from './lib/form-state';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
 import { formatDuration } from './lib/format-duration';
-import { groupDigits, stripToDigits } from './lib/format-number';
 import LanguageSwitcher from './language-switcher';
 import GuideBanner from './guide-banner';
 import Emblem from './emblem';
+import NumberField from './number-field';
+
+const CHECKBOX_CLASS =
+  'h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] accent-[var(--color-accent)]';
+
+function parseOrZero(value: string): number {
+  const n = Number(value);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function ResultTile({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="flex-1 basis-[160px]">
+      <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
+        {label}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function ResultValue({ children }: { children: ReactNode }) {
+  return <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">{children}</h3>;
+}
 
 export default function CalculatorForm() {
   const router = useRouter();
@@ -26,101 +51,25 @@ export default function CalculatorForm() {
   const { t, locale } = useLocale();
   useLocalizedTitle(t.appTitle);
 
-  const [rateInput, setRateInput] = useState(() => searchParams.get('rate') ?? '');
-  const [amountInput, setAmountInput] = useState(() => searchParams.get('amount') ?? '');
-  const [neededInput, setNeededInput] = useState(() => searchParams.get('needed') ?? '');
-  // Which of the three number fields (if any) is currently focused — comma
-  // grouping is only applied to a field while it's NOT the focused one, so
-  // the displayed value never diverges from what's actually being typed
-  // (see format-number.ts for why that matters for undo/redo).
-  const [focusedField, setFocusedField] = useState<'amount' | 'needed' | 'rate' | null>(null);
-  // Gated so an old shared link carrying ?predators=1 can't add a bonus the
-  // user has no visible way to turn off.
-  const [includePredators, setIncludePredators] = useState(
-    () => PREDATORS_AVAILABLE && searchParams.get('predators') === '1'
-  );
-  const [predatorLevel, setPredatorLevel] = useState<PredatorLevel>(() => {
-    const level = Number(searchParams.get('predatorLevel'));
-    return PREDATOR_LEVELS.includes(level as PredatorLevel) ? (level as PredatorLevel) : 180;
-  });
+  const [form, setForm] = useState(() => formStateFromParams(searchParams));
 
-  function updateParams(
-    rate: string,
-    amount: string,
-    needed: string,
-    predators: boolean,
-    level: PredatorLevel
-  ) {
-    const params = new URLSearchParams();
-    if (rate) params.set('rate', rate);
-    if (amount) params.set('amount', amount);
-    if (needed) params.set('needed', needed);
-    if (predators) {
-      params.set('predators', '1');
-      params.set('predatorLevel', String(level));
-    }
-    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  function update(changes: Partial<FormState>) {
+    const next = { ...form, ...changes };
+    setForm(next);
+    router.replace(`${pathname}?${formStateToQuery(next)}`, { scroll: false });
   }
 
-  function parseOrZero(value: string): number {
-    const n = Number(value);
-    return Number.isFinite(n) ? n : 0;
-  }
+  const rate = Number(form.rate);
+  const rateIsValid = isValidRate(rate);
+  const predatorBonus = form.includePredators ? PREDATOR_YIELDS[form.predatorLevel] * 2 : 0;
+  const quickObtain = form.includeQuickObtain ? quickObtainBonus(rate) : 0;
+  const amount = parseOrZero(form.amount) + predatorBonus + quickObtain;
+  const needed = parseOrZero(form.needed);
 
-  function handleSelectAll(e: React.MouseEvent<HTMLInputElement>) {
-    e.currentTarget.select();
-  }
-
-  function handleRateChange(value: string) {
-    setRateInput(value);
-    updateParams(value, amountInput, neededInput, includePredators, predatorLevel);
-  }
-
-  function handleAmountChange(value: string) {
-    setAmountInput(value);
-    updateParams(rateInput, value, neededInput, includePredators, predatorLevel);
-  }
-
-  function handleNeededChange(value: string) {
-    setNeededInput(value);
-    updateParams(rateInput, amountInput, value, includePredators, predatorLevel);
-  }
-
-  function handleIncludePredatorsChange(value: boolean) {
-    setIncludePredators(value);
-    updateParams(rateInput, amountInput, neededInput, value, predatorLevel);
-  }
-
-  function handlePredatorLevelChange(value: PredatorLevel) {
-    setPredatorLevel(value);
-    updateParams(rateInput, amountInput, neededInput, includePredators, value);
-  }
-
-  const rate = Number(rateInput);
-  const predatorBonus = includePredators ? PREDATOR_YIELDS[predatorLevel] * 2 : 0;
-  const amount = parseOrZero(amountInput) + predatorBonus;
-  const needed = parseOrZero(neededInput);
-  const leftover = needed - amount;
-
-  const validation = validateRate(rate);
-  const result = validation.valid ? calculate({ rate, amount, needed }) : null;
-
-  const dailyRate = validation.valid ? rate * 24 : null;
-  const dailyRateHint =
-    dailyRate !== null ? t.dailyRateHint.replace('{amount}', Math.round(dailyRate).toLocaleString(locale)) : '';
-
-  const showRateError = rateInput !== '' && !validation.valid;
-  const alreadyReached = neededInput !== '' && leftover <= 0;
-  const hasResult = validation.valid && result !== null && leftover > 0;
-
-  const marginLabel =
-    result && hasResult
-      ? result.readyRelation === 'before'
-        ? t.marginToSpare.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
-        : t.marginMissesBy.replace('{duration}', formatDuration(Math.abs(result.resetOffset)))
-      : '';
-  const verdictBg = result?.readyRelation === 'before' ? 'var(--color-success-800)' : 'var(--color-danger-800)';
-  const verdictColor = result?.readyRelation === 'before' ? 'var(--color-success-100)' : 'var(--color-danger-100)';
+  const alreadyReached = form.needed !== '' && needed <= amount;
+  const result = rateIsValid && needed > amount ? calculate({ rate, amount, needed }) : null;
+  const isReadyBeforeReset = result?.readyRelation === 'before';
+  const showRateError = form.rate !== '' && !rateIsValid;
 
   const [predatorsLabelPrefix, predatorsLabelSuffix] = t.predatorsCheckboxLabel.split('{level}');
 
@@ -159,79 +108,58 @@ export default function CalculatorForm() {
         style={{ background: 'var(--color-surface)', boxShadow: 'var(--shadow-sm)' }}
       >
         <div className="flex gap-4 flex-wrap">
-          <div className="flex-1 basis-[200px]">
-            <label htmlFor="storage" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.amountLabel}</label>
-            <NumberFormatBase
-              id="storage"
-              inputMode="numeric"
-              placeholder={t.storagePlaceholder}
-              value={amountInput}
-              format={value => (focusedField === 'amount' ? value : groupDigits(value))}
-              removeFormatting={value => stripToDigits(value)}
-              onValueChange={values => handleAmountChange(values.value)}
-              onFocus={() => setFocusedField('amount')}
-              onBlur={() => setFocusedField(null)}
-              onClick={handleSelectAll}
-              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
-            />
-          </div>
-          <div className="flex-1 basis-[200px]">
-            <label htmlFor="target" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.neededLabel}</label>
-            <NumberFormatBase
-              id="target"
-              inputMode="numeric"
-              placeholder={t.targetPlaceholder}
-              value={neededInput}
-              format={value => (focusedField === 'needed' ? value : groupDigits(value))}
-              removeFormatting={value => stripToDigits(value)}
-              onValueChange={values => handleNeededChange(values.value)}
-              onFocus={() => setFocusedField('needed')}
-              onBlur={() => setFocusedField(null)}
-              onClick={handleSelectAll}
-              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
-            />
-          </div>
-          <div className="flex-1 basis-[200px]">
-            <label htmlFor="rate" className="block text-xs opacity-70 mb-1 text-[var(--color-text)]">{t.rateLabel}</label>
-            <NumberFormatBase
-              id="rate"
-              inputMode="numeric"
-              placeholder={t.ratePlaceholder}
-              value={rateInput}
-              format={value => (focusedField === 'rate' ? value : groupDigits(value))}
-              removeFormatting={value => stripToDigits(value)}
-              onValueChange={values => handleRateChange(values.value)}
-              onFocus={() => setFocusedField('rate')}
-              onBlur={() => setFocusedField(null)}
-              onClick={handleSelectAll}
-              className="w-full min-h-9 rounded-[var(--radius-md)] px-3 bg-[var(--color-surface)] border border-[var(--color-divider)] text-[var(--color-text)] hover:border-white/30 focus:outline-none focus:border-[var(--color-accent)]"
-            />
-          </div>
+          <NumberField
+            id="storage"
+            label={t.amountLabel}
+            placeholder={t.storagePlaceholder}
+            value={form.amount}
+            onChange={value => update({ amount: value })}
+          />
+          <NumberField
+            id="target"
+            label={t.neededLabel}
+            placeholder={t.targetPlaceholder}
+            value={form.needed}
+            onChange={value => update({ needed: value })}
+          />
+          <NumberField
+            id="rate"
+            label={t.rateLabel}
+            placeholder={t.ratePlaceholder}
+            value={form.rate}
+            onChange={value => update({ rate: value })}
+          />
         </div>
 
         <div className="flex gap-4 flex-wrap items-start">
-          {/* With predators hidden, this stays as an empty spacer so the
-              daily-rate hint lines up under the rate field. 632px is where
-              the three inputs above wrap (3 x 200px + 2 x 16px gaps); below
-              that the spacer would just add a blank row. */}
-          <div
-            className={`${PREDATORS_AVAILABLE ? 'flex' : 'hidden @min-[632px]:flex'} flex-[2] basis-[416px] items-center gap-2 text-sm text-[var(--color-text)]`}
-          >
+          <div className="flex flex-[2] basis-[416px] flex-col gap-2 text-sm text-[var(--color-text)]">
+            <div className="flex items-center gap-2">
+              <input
+                id="include-quick-obtain"
+                type="checkbox"
+                checked={form.includeQuickObtain}
+                onChange={e => update({ includeQuickObtain: e.target.checked })}
+                className={CHECKBOX_CLASS}
+              />
+              <label htmlFor="include-quick-obtain">
+                {t.quickObtainCheckboxLabel.replace('{count}', String(QUICK_OBTAIN_USES_PER_DAY))}
+              </label>
+            </div>
             {PREDATORS_AVAILABLE && (
-              <>
+              <div className="flex items-center gap-2">
                 <input
                   id="include-predators"
                   type="checkbox"
-                  checked={includePredators}
-                  onChange={e => handleIncludePredatorsChange(e.target.checked)}
-                  className="h-4 w-4 shrink-0 rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] accent-[var(--color-accent)]"
+                  checked={form.includePredators}
+                  onChange={e => update({ includePredators: e.target.checked })}
+                  className={CHECKBOX_CLASS}
                 />
                 <label htmlFor="include-predators" className="flex flex-wrap items-center gap-2">
                   <span>{predatorsLabelPrefix}</span>
                   <select
-                    value={predatorLevel}
-                    onChange={e => handlePredatorLevelChange(Number(e.target.value) as PredatorLevel)}
-                    disabled={!includePredators}
+                    value={form.predatorLevel}
+                    onChange={e => update({ predatorLevel: Number(e.target.value) as PredatorLevel })}
+                    disabled={!form.includePredators}
                     className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
                   >
                     {PREDATOR_LEVELS.map(level => (
@@ -242,7 +170,7 @@ export default function CalculatorForm() {
                   </select>
                   {predatorsLabelSuffix && <span>{predatorsLabelSuffix}</span>}
                 </label>
-              </>
+              </div>
             )}
           </div>
           <div className="flex-1 basis-[200px]">
@@ -250,8 +178,10 @@ export default function CalculatorForm() {
               <div className="text-xs" style={{ color: 'var(--color-accent-300)' }}>
                 {t.rateError}
               </div>
-            ) : dailyRate !== null ? (
-              <div className="text-xs opacity-70 text-[var(--color-text)]">{dailyRateHint}</div>
+            ) : rateIsValid ? (
+              <div className="text-xs opacity-70 text-[var(--color-text)]">
+                {t.dailyRateHint.replace('{amount}', Math.round(rate * 24).toLocaleString(locale))}
+              </div>
             ) : null}
           </div>
         </div>
@@ -268,40 +198,35 @@ export default function CalculatorForm() {
           <p className="text-sm opacity-85 text-[var(--color-text)]">{t.alreadyReachedMessage}</p>
         ) : (
           <div className="flex gap-4 flex-wrap">
-            <div className="flex-1 basis-[160px]">
-              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
-                {t.timeUntilTargetLabel}
-              </div>
-              <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
-                {hasResult && result ? formatDuration(result.hoursLeft) : '—'}
-              </h3>
-            </div>
-            <div className="flex-1 basis-[160px]">
-              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
-                {t.timeUntilResetLabel}
-              </div>
-              <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">
-                {hasResult && result ? formatDuration(result.hoursBeforeReset) : '—'}
-              </h3>
-            </div>
-            <div className="flex-1 basis-[160px]">
-              <div className="text-[10px] uppercase tracking-[0.1em] mb-1.5" style={{ color: 'var(--color-accent)' }}>
-                {t.resetVerdictLabel}
-              </div>
-              {hasResult && result ? (
+            <ResultTile label={t.timeUntilTargetLabel}>
+              <ResultValue>{result ? formatDuration(result.hoursLeft) : '—'}</ResultValue>
+            </ResultTile>
+            <ResultTile label={t.timeUntilResetLabel}>
+              <ResultValue>{result ? formatDuration(result.hoursBeforeReset) : '—'}</ResultValue>
+            </ResultTile>
+            <ResultTile label={t.resetVerdictLabel}>
+              {result ? (
                 <>
                   <div
                     className="inline-block text-[13px] font-medium px-3 py-1 rounded-[var(--radius-sm)]"
-                    style={{ background: verdictBg, color: verdictColor }}
+                    style={{
+                      background: isReadyBeforeReset ? 'var(--color-success-800)' : 'var(--color-danger-800)',
+                      color: isReadyBeforeReset ? 'var(--color-success-100)' : 'var(--color-danger-100)',
+                    }}
                   >
-                    {result.readyRelation === 'after' ? t.readyAfter : t.readyBefore}
+                    {isReadyBeforeReset ? t.readyBefore : t.readyAfter}
                   </div>
-                  <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">{marginLabel}</div>
+                  <div className="text-xs mt-[5px] opacity-70 text-[var(--color-text)]">
+                    {(isReadyBeforeReset ? t.marginToSpare : t.marginMissesBy).replace(
+                      '{duration}',
+                      formatDuration(Math.abs(result.resetOffset))
+                    )}
+                  </div>
                 </>
               ) : (
-                <h3 className="text-[25px] font-medium m-0 text-[var(--color-text)]">—</h3>
+                <ResultValue>—</ResultValue>
               )}
-            </div>
+            </ResultTile>
           </div>
         )}
       </div>

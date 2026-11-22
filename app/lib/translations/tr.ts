@@ -15,6 +15,7 @@ const tr: Translations = {
   rateError: "0'dan büyük bir değer gir.",
   dailyRateHint: 'Günde ≈ {amount}',
   predatorsCheckboxLabel: 'İki adet seviye {level} yırtıcıyı dahil et',
+  quickObtainCheckboxLabel: '{count} Hızlı Elde Etme kullanımını dahil et',
   languageLabel: 'Dil',
   guideLinkLabel: 'Oyun Rehberleri',
   guideBackLink: '← Hesaplayıcıya dön',

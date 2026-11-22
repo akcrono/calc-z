@@ -15,6 +15,7 @@ const zhTW: Translations = {
   rateError: '請輸入大於 0 的數值。',
   dailyRateHint: '約每天 {amount}',
   predatorsCheckboxLabel: '包含兩隻 {level} 級掠食者',
+  quickObtainCheckboxLabel: '包含 {count} 次快速獲取',
   languageLabel: '語言',
   guideLinkLabel: '遊戲攻略',
   guideBackLink: '← 返回計算機',

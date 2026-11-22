@@ -26,6 +26,21 @@ export const PREDATOR_LEVELS = Object.keys(PREDATOR_YIELDS).map(Number) as Preda
  * the mechanic comes back. */
 export const PREDATORS_AVAILABLE = false;
 
+/** Quick Obtain replaced predators in the Holy Water season. Each use grants
+ * a flat amount plus one hour of the player's own production, and the uses
+ * refresh at the daily reset. */
+export const QUICK_OBTAIN_USES_PER_DAY = 3;
+const QUICK_OBTAIN_FLAT_YIELD = 15000;
+
+export function isValidRate(rate: number): boolean {
+  return Number.isFinite(rate) && rate > 0;
+}
+
+export function quickObtainBonus(rate: number): number {
+  const hourOfProduction = isValidRate(rate) ? rate : 0;
+  return QUICK_OBTAIN_USES_PER_DAY * (QUICK_OBTAIN_FLAT_YIELD + hourOfProduction);
+}
+
 export interface CalcInput {
   rate: number;
   amount: number;
@@ -34,39 +49,21 @@ export interface CalcInput {
 }
 
 export interface CalcResult {
-  leftover: number;
   hoursLeft: number;
-  nextResetAt: Date;
   hoursBeforeReset: number;
   resetOffset: number;
   readyRelation: 'before' | 'after';
 }
 
 export function calculate({ rate, amount, needed, now = new Date() }: CalcInput): CalcResult {
-  const leftover = needed - amount;
-  const hoursLeft = leftover / rate;
-  const nextResetAt = nextReset(now);
-  const hoursBeforeReset = (nextResetAt.getTime() - now.getTime()) / (1000 * 60 * 60);
+  const hoursLeft = (needed - amount) / rate;
+  const hoursBeforeReset = (nextReset(now).getTime() - now.getTime()) / (1000 * 60 * 60);
   const resetOffset = hoursBeforeReset - hoursLeft;
 
   return {
-    leftover,
     hoursLeft,
-    nextResetAt,
     hoursBeforeReset,
     resetOffset,
     readyRelation: resetOffset < 0 ? 'after' : 'before',
   };
-}
-
-export interface ValidationResult {
-  valid: boolean;
-  error?: 'rate-must-be-positive';
-}
-
-export function validateRate(rate: number): ValidationResult {
-  if (!Number.isFinite(rate) || rate <= 0) {
-    return { valid: false, error: 'rate-must-be-positive' };
-  }
-  return { valid: true };
 }

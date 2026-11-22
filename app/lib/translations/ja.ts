@@ -15,6 +15,7 @@ const ja: Translations = {
   rateError: '0より大きい値を入力してください。',
   dailyRateHint: '1日あたり約{amount}',
   predatorsCheckboxLabel: 'レベル{level}のプレデターを2体含める',
+  quickObtainCheckboxLabel: 'クイック獲得を{count}回分含める',
   languageLabel: '言語',
   guideLinkLabel: 'ゲームガイド',
   guideBackLink: '← 計算機に戻る',

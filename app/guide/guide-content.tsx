@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useLocale, useLocalizedTitle } from '../lib/locale-context';
-import { RTL_LOCALES } from '../lib/translations';
 import { guideSectionsByLocale } from '../lib/guide/sections';
 import GuideBanner from '../guide-banner';
 import LanguageSwitcher from '../language-switcher';
@@ -11,11 +10,10 @@ export default function GuideContent() {
   const { locale, t } = useLocale();
   useLocalizedTitle(`${t.guideTitle} — ${t.appTitle}`);
 
-  const dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
   const guideSections = guideSectionsByLocale[locale];
 
   return (
-    <main dir={dir} className="min-h-screen p-4">
+    <main className="min-h-screen p-4">
       <div className="relative mx-auto max-w-2xl py-8">
         <LanguageSwitcher />
 
@@ -59,23 +57,17 @@ export default function GuideContent() {
                 {section.title}
               </h2>
               <div className="space-y-3 text-sm text-[var(--color-text)]">
-                {section.blocks.map((block, i) =>
-                  block.type === 'paragraph' ? (
-                    <p key={i}>{block.text}</p>
-                  ) : block.ordered ? (
-                    <ol key={i} className="list-decimal list-inside space-y-1">
+                {section.blocks.map((block, i) => {
+                  if (block.type === 'paragraph') return <p key={i}>{block.text}</p>;
+                  const List = block.ordered ? 'ol' : 'ul';
+                  return (
+                    <List key={i} className={`${block.ordered ? 'list-decimal' : 'list-disc'} list-inside space-y-1`}>
                       {block.items.map((item, j) => (
                         <li key={j}>{item}</li>
                       ))}
-                    </ol>
-                  ) : (
-                    <ul key={i} className="list-disc list-inside space-y-1">
-                      {block.items.map((item, j) => (
-                        <li key={j}>{item}</li>
-                      ))}
-                    </ul>
-                  )
-                )}
+                    </List>
+                  );
+                })}
               </div>
             </section>
           ))}

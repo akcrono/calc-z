@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test --no-warnings app/**/*.test.ts"
+    "test": "node --test --no-warnings \"app/**/*.test.ts\""
   },
   "dependencies": {
     "next": "16.2.12",

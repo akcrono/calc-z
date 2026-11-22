@@ -1,8 +1,4 @@
-export default function Emblem({
-  className = 'mx-auto h-14 w-14 text-[var(--color-accent)]',
-}: {
-  className?: string;
-}) {
+export default function Emblem({ className }: { className: string }) {
   return (
     <svg
       viewBox="0 0 100 100"

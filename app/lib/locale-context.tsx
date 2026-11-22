@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
-import { translations, RTL_LOCALES, type Locale } from './translations';
+import { translations, localeDirection, type Locale } from './translations';
 
 interface LocaleContextValue {
   locale: Locale;
@@ -21,7 +21,7 @@ export function LocaleProvider({
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.dir = RTL_LOCALES.has(locale) ? 'rtl' : 'ltr';
+    document.documentElement.dir = localeDirection(locale);
   }, [locale]);
 
   function setLocale(next: Locale) {

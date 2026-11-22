@@ -13,6 +13,7 @@ export interface Translations {
   rateError: string;
   dailyRateHint: string;
   predatorsCheckboxLabel: string;
+  quickObtainCheckboxLabel: string;
   languageLabel: string;
   guideLinkLabel: string;
   guideBackLink: string;

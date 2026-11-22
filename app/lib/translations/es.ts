@@ -15,6 +15,7 @@ const es: Translations = {
   rateError: 'Introduce una tasa mayor que 0.',
   dailyRateHint: '≈ {amount} al día',
   predatorsCheckboxLabel: 'Incluir dos depredadores de nivel {level}',
+  quickObtainCheckboxLabel: 'Incluir {count} usos de Obtención rápida',
   languageLabel: 'Idioma',
   guideLinkLabel: 'Guías de juego',
   guideBackLink: '← Volver a la calculadora',
