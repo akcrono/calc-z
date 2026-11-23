@@ -6,8 +6,8 @@ const EMPTY: FormState = {
   rate: '',
   amount: '',
   needed: '',
-  includePredators: false,
-  predatorLevel: 180,
+  includeVampireGuard: false,
+  vampireGuardLevel: 330,
   includeQuickObtain: false,
 };
 
@@ -35,18 +35,25 @@ test('formStateFromParams turns quick obtain on only for quickObtain=1', () => {
   );
 });
 
-// An old shared link must not add a bonus the user has no visible way to
-// turn off.
-test('formStateFromParams ignores predators=1 while predators are hidden', () => {
-  assert.equal(parse('predators=1&predatorLevel=190').includePredators, false);
+test('formStateFromParams turns vampire guard on only for vampireGuard=1', () => {
+  assert.deepEqual(
+    [parse('vampireGuard=1').includeVampireGuard, parse('vampireGuard=true').includeVampireGuard],
+    [true, false]
+  );
 });
 
-test('formStateFromParams keeps a known predator level', () => {
-  assert.equal(parse('predatorLevel=200').predatorLevel, 200);
+// Predator levels and yields no longer exist, so an old shared link must not
+// switch on the option that replaced them.
+test('formStateFromParams ignores the old predator params', () => {
+  assert.deepEqual(parse('predators=1&predatorLevel=190'), EMPTY);
 });
 
-test('formStateFromParams falls back to level 180 for an unknown predator level', () => {
-  assert.equal(parse('predatorLevel=999').predatorLevel, 180);
+test('formStateFromParams keeps a known vampire guard level', () => {
+  assert.equal(parse('vampireGuardLevel=310').vampireGuardLevel, 310);
+});
+
+test('formStateFromParams falls back to level 330 for an unknown vampire guard level', () => {
+  assert.equal(parse('vampireGuardLevel=999').vampireGuardLevel, 330);
 });
 
 test('formStateToQuery is empty when nothing is filled in', () => {
@@ -61,17 +68,24 @@ test('formStateToQuery writes quickObtain=1 when quick obtain is on', () => {
   assert.equal(formStateToQuery({ ...EMPTY, rate: '120', includeQuickObtain: true }), 'rate=120&quickObtain=1');
 });
 
-test('formStateToQuery writes the predator level only when predators are on', () => {
+test('formStateToQuery writes the vampire guard level only when vampire guard is on', () => {
   assert.deepEqual(
     [
-      formStateToQuery({ ...EMPTY, predatorLevel: 190 }),
-      formStateToQuery({ ...EMPTY, includePredators: true, predatorLevel: 190 }),
+      formStateToQuery({ ...EMPTY, vampireGuardLevel: 310 }),
+      formStateToQuery({ ...EMPTY, includeVampireGuard: true, vampireGuardLevel: 310 }),
     ],
-    ['', 'predators=1&predatorLevel=190']
+    ['', 'vampireGuard=1&vampireGuardLevel=310']
   );
 });
 
 test('formStateToQuery output parses back to the same state', () => {
-  const state: FormState = { ...EMPTY, rate: '120', amount: '4300', needed: '25000', includeQuickObtain: true };
+  const state: FormState = {
+    rate: '120',
+    amount: '4300',
+    needed: '25000',
+    includeVampireGuard: true,
+    vampireGuardLevel: 340,
+    includeQuickObtain: true,
+  };
   assert.deepEqual(parse(formStateToQuery(state)), state);
 });

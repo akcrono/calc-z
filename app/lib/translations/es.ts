@@ -14,7 +14,7 @@ const es: Translations = {
   readyAfter: 'Después del reinicio',
   rateError: 'Introduce una tasa mayor que 0.',
   dailyRateHint: '≈ {amount} al día',
-  predatorsCheckboxLabel: 'Incluir dos depredadores de nivel {level}',
+  vampireGuardCheckboxLabel: 'Incluir {count} Guardias Vampiro de nivel {level}',
   quickObtainCheckboxLabel: 'Incluir {count} usos de Obtención rápida',
   languageLabel: 'Idioma',
   guideLinkLabel: 'Guías de juego',

@@ -14,7 +14,7 @@ const ko: Translations = {
   readyAfter: '리셋 후',
   rateError: '0보다 큰 값을 입력하세요.',
   dailyRateHint: '하루 약 {amount}',
-  predatorsCheckboxLabel: '레벨 {level} 포식자 2마리 포함',
+  vampireGuardCheckboxLabel: '레벨 {level} 뱀파이어 가드 {count}명 포함',
   quickObtainCheckboxLabel: '빠른 획득 {count}회 포함',
   languageLabel: '언어',
   guideLinkLabel: '게임 가이드',

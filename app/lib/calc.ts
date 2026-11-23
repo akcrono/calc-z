@@ -10,25 +10,29 @@ export function nextReset(now: Date = new Date()): Date {
   return reset;
 }
 
-/** Seasonal-resource yield from a single predator kill, by predator level.
- * Measured during the fernleaf season. Players can kill this enemy up to
- * twice a day; only these levels exist. */
-export const PREDATOR_YIELDS: Record<180 | 190 | 200, number> = {
-  180: 68000,
-  190: 72000,
-  200: 76000,
+/** Holy Water from a single Vampire Guard kill, by guard level. Only these
+ * levels exist. */
+const VAMPIRE_GUARD_YIELDS = {
+  300: 60000,
+  310: 64000,
+  320: 68000,
+  330: 72000,
+  340: 76000,
 };
-export type PredatorLevel = keyof typeof PREDATOR_YIELDS;
-export const PREDATOR_LEVELS = Object.keys(PREDATOR_YIELDS).map(Number) as PredatorLevel[];
+export type VampireGuardLevel = keyof typeof VAMPIRE_GUARD_YIELDS;
+export const VAMPIRE_GUARD_LEVELS = Object.keys(VAMPIRE_GUARD_YIELDS).map(Number) as VampireGuardLevel[];
 
-/** Predators haven't returned in the Holy Water season, so the option is
- * hidden rather than offering a bonus that doesn't exist. Flip back on if
- * the mechanic comes back. */
-export const PREDATORS_AVAILABLE = false;
+/** The cap rises to 5 on Sundays, but Sundays also bring other one-off
+ * sources that this calculator doesn't model, so the weekday cap is used
+ * every day. */
+export const VAMPIRE_GUARD_KILLS_PER_DAY = 2;
 
-/** Quick Obtain replaced predators in the Holy Water season. Each use grants
- * a flat amount plus one hour of the player's own production, and the uses
- * refresh at the daily reset. */
+export function vampireGuardBonus(level: VampireGuardLevel): number {
+  return VAMPIRE_GUARD_KILLS_PER_DAY * VAMPIRE_GUARD_YIELDS[level];
+}
+
+/** Each Quick Obtain use grants a flat amount plus one hour of the player's
+ * own production, and the uses refresh at the daily reset. */
 export const QUICK_OBTAIN_USES_PER_DAY = 3;
 const QUICK_OBTAIN_FLAT_YIELD = 15000;
 

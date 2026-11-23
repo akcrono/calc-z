@@ -1,6 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { calculate, isValidRate, nextReset, quickObtainBonus } from './calc.ts';
+import {
+  calculate,
+  isValidRate,
+  nextReset,
+  quickObtainBonus,
+  vampireGuardBonus,
+  VAMPIRE_GUARD_LEVELS,
+} from './calc.ts';
 
 test('nextReset stays at 02:00 UTC during US daylight saving time', () => {
   assert.equal(nextReset(new Date('2026-07-29T12:00:00Z')).toISOString(), '2026-07-30T02:00:00.000Z');
@@ -56,5 +63,21 @@ test('isValidRate accepts a positive rate', () => {
 for (const rate of [0, -5, Number.NaN, Number.POSITIVE_INFINITY]) {
   test(`isValidRate rejects ${rate}`, () => {
     assert.equal(isValidRate(rate), false);
+  });
+}
+
+test('VAMPIRE_GUARD_LEVELS lists the five levels in ascending order', () => {
+  assert.deepEqual(VAMPIRE_GUARD_LEVELS, [300, 310, 320, 330, 340]);
+});
+
+for (const [level, bonus] of [
+  [300, 120_000],
+  [310, 128_000],
+  [320, 136_000],
+  [330, 144_000],
+  [340, 152_000],
+] as const) {
+  test(`vampireGuardBonus is two kills' worth at level ${level}`, () => {
+    assert.equal(vampireGuardBonus(level), bonus);
   });
 }

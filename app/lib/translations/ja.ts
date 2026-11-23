@@ -14,7 +14,7 @@ const ja: Translations = {
   readyAfter: 'リセット後',
   rateError: '0より大きい値を入力してください。',
   dailyRateHint: '1日あたり約{amount}',
-  predatorsCheckboxLabel: 'レベル{level}のプレデターを2体含める',
+  vampireGuardCheckboxLabel: 'レベル{level}のヴァンパイアガードを{count}体含める',
   quickObtainCheckboxLabel: 'クイック獲得を{count}回分含める',
   languageLabel: '言語',
   guideLinkLabel: 'ゲームガイド',

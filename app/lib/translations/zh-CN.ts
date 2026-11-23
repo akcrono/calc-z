@@ -14,7 +14,7 @@ const zhCN: Translations = {
   readyAfter: '重置后',
   rateError: '请输入大于 0 的数值。',
   dailyRateHint: '约每天 {amount}',
-  predatorsCheckboxLabel: '包含两只 {level} 级捕食者',
+  vampireGuardCheckboxLabel: '包含 {count} 个 {level} 级吸血鬼守卫',
   quickObtainCheckboxLabel: '包含 {count} 次快速获取',
   languageLabel: '语言',
   guideLinkLabel: '游戏攻略',

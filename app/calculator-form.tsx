@@ -6,12 +6,12 @@ import Link from 'next/link';
 import {
   calculate,
   isValidRate,
-  PREDATOR_YIELDS,
-  PREDATOR_LEVELS,
-  PREDATORS_AVAILABLE,
   QUICK_OBTAIN_USES_PER_DAY,
   quickObtainBonus,
-  type PredatorLevel,
+  VAMPIRE_GUARD_KILLS_PER_DAY,
+  VAMPIRE_GUARD_LEVELS,
+  vampireGuardBonus,
+  type VampireGuardLevel,
 } from './lib/calc';
 import { formStateFromParams, formStateToQuery, type FormState } from './lib/form-state';
 import { useLocale, useLocalizedTitle } from './lib/locale-context';
@@ -61,9 +61,9 @@ export default function CalculatorForm() {
 
   const rate = Number(form.rate);
   const rateIsValid = isValidRate(rate);
-  const predatorBonus = form.includePredators ? PREDATOR_YIELDS[form.predatorLevel] * 2 : 0;
+  const vampireGuard = form.includeVampireGuard ? vampireGuardBonus(form.vampireGuardLevel) : 0;
   const quickObtain = form.includeQuickObtain ? quickObtainBonus(rate) : 0;
-  const amount = parseOrZero(form.amount) + predatorBonus + quickObtain;
+  const amount = parseOrZero(form.amount) + vampireGuard + quickObtain;
   const needed = parseOrZero(form.needed);
 
   const alreadyReached = form.needed !== '' && needed <= amount;
@@ -71,7 +71,9 @@ export default function CalculatorForm() {
   const isReadyBeforeReset = result?.readyRelation === 'before';
   const showRateError = form.rate !== '' && !rateIsValid;
 
-  const [predatorsLabelPrefix, predatorsLabelSuffix] = t.predatorsCheckboxLabel.split('{level}');
+  const [vampireGuardLabelPrefix, vampireGuardLabelSuffix] = t.vampireGuardCheckboxLabel
+    .replace('{count}', String(VAMPIRE_GUARD_KILLS_PER_DAY))
+    .split('{level}');
 
   return (
     <div className="relative w-full max-w-[760px]">
@@ -145,45 +147,48 @@ export default function CalculatorForm() {
                 {t.quickObtainCheckboxLabel.replace('{count}', String(QUICK_OBTAIN_USES_PER_DAY))}
               </label>
             </div>
-            {PREDATORS_AVAILABLE && (
-              <div className="flex items-center gap-2">
-                <input
-                  id="include-predators"
-                  type="checkbox"
-                  checked={form.includePredators}
-                  onChange={e => update({ includePredators: e.target.checked })}
-                  className={CHECKBOX_CLASS}
-                />
-                <label htmlFor="include-predators" className="flex flex-wrap items-center gap-2">
-                  <span>{predatorsLabelPrefix}</span>
-                  <select
-                    value={form.predatorLevel}
-                    onChange={e => update({ predatorLevel: Number(e.target.value) as PredatorLevel })}
-                    disabled={!form.includePredators}
-                    className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
-                  >
-                    {PREDATOR_LEVELS.map(level => (
-                      <option key={level} value={level}>
-                        {level}
-                      </option>
-                    ))}
-                  </select>
-                  {predatorsLabelSuffix && <span>{predatorsLabelSuffix}</span>}
-                </label>
-              </div>
-            )}
+            <div className="flex items-center gap-2">
+              <input
+                id="include-vampire-guard"
+                type="checkbox"
+                checked={form.includeVampireGuard}
+                onChange={e => update({ includeVampireGuard: e.target.checked })}
+                className={CHECKBOX_CLASS}
+              />
+              <label htmlFor="include-vampire-guard" className="flex flex-wrap items-center gap-2">
+                <span>{vampireGuardLabelPrefix}</span>
+                <select
+                  value={form.vampireGuardLevel}
+                  onChange={e => update({ vampireGuardLevel: Number(e.target.value) as VampireGuardLevel })}
+                  disabled={!form.includeVampireGuard}
+                  className="rounded-[var(--radius-sm)] border border-[var(--color-divider)] bg-[var(--color-surface)] px-2 py-0.5 text-[var(--color-text)] focus:outline-none focus:border-[var(--color-accent)] disabled:opacity-50"
+                >
+                  {VAMPIRE_GUARD_LEVELS.map(level => (
+                    <option key={level} value={level}>
+                      {level}
+                    </option>
+                  ))}
+                </select>
+                {vampireGuardLabelSuffix && <span>{vampireGuardLabelSuffix}</span>}
+              </label>
+            </div>
           </div>
-          <div className="flex-1 basis-[200px]">
-            {showRateError ? (
-              <div className="text-xs" style={{ color: 'var(--color-accent-300)' }}>
-                {t.rateError}
-              </div>
-            ) : rateIsValid ? (
-              <div className="text-xs opacity-70 text-[var(--color-text)]">
-                {t.dailyRateHint.replace('{amount}', Math.round(rate * 24).toLocaleString(locale))}
-              </div>
-            ) : null}
-          </div>
+          {/* Below 632px (3 x 200px inputs + 2 x 16px gaps) the rows stack, so
+              this moves ahead of the checkboxes to stay right under the rate
+              field it describes. */}
+          {(showRateError || rateIsValid) && (
+            <div className="order-first @min-[632px]:order-none flex-1 basis-[200px]">
+              {showRateError ? (
+                <div className="text-xs" style={{ color: 'var(--color-accent-300)' }}>
+                  {t.rateError}
+                </div>
+              ) : (
+                <div className="text-xs opacity-70 text-[var(--color-text)]">
+                  {t.dailyRateHint.replace('{amount}', Math.round(rate * 24).toLocaleString(locale))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         <div

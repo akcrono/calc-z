@@ -1,27 +1,25 @@
 // Explicit .ts extension so Node's test runner can resolve this import.
-import { PREDATOR_LEVELS, PREDATORS_AVAILABLE, type PredatorLevel } from './calc.ts';
+import { VAMPIRE_GUARD_LEVELS, type VampireGuardLevel } from './calc.ts';
 
 export interface FormState {
   rate: string;
   amount: string;
   needed: string;
-  includePredators: boolean;
-  predatorLevel: PredatorLevel;
+  includeVampireGuard: boolean;
+  vampireGuardLevel: VampireGuardLevel;
   includeQuickObtain: boolean;
 }
 
-const DEFAULT_PREDATOR_LEVEL: PredatorLevel = 180;
+const DEFAULT_VAMPIRE_GUARD_LEVEL: VampireGuardLevel = 330;
 
 export function formStateFromParams(params: Pick<URLSearchParams, 'get'>): FormState {
-  const level = Number(params.get('predatorLevel')) as PredatorLevel;
+  const level = Number(params.get('vampireGuardLevel')) as VampireGuardLevel;
   return {
     rate: params.get('rate') ?? '',
     amount: params.get('amount') ?? '',
     needed: params.get('needed') ?? '',
-    // Gated so an old shared link carrying ?predators=1 can't add a bonus the
-    // user has no visible way to turn off.
-    includePredators: PREDATORS_AVAILABLE && params.get('predators') === '1',
-    predatorLevel: PREDATOR_LEVELS.includes(level) ? level : DEFAULT_PREDATOR_LEVEL,
+    includeVampireGuard: params.get('vampireGuard') === '1',
+    vampireGuardLevel: VAMPIRE_GUARD_LEVELS.includes(level) ? level : DEFAULT_VAMPIRE_GUARD_LEVEL,
     includeQuickObtain: params.get('quickObtain') === '1',
   };
 }
@@ -31,9 +29,9 @@ export function formStateToQuery(state: FormState): string {
   if (state.rate) params.set('rate', state.rate);
   if (state.amount) params.set('amount', state.amount);
   if (state.needed) params.set('needed', state.needed);
-  if (state.includePredators) {
-    params.set('predators', '1');
-    params.set('predatorLevel', String(state.predatorLevel));
+  if (state.includeVampireGuard) {
+    params.set('vampireGuard', '1');
+    params.set('vampireGuardLevel', String(state.vampireGuardLevel));
   }
   if (state.includeQuickObtain) params.set('quickObtain', '1');
   return params.toString();

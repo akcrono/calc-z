@@ -14,7 +14,7 @@ const tr: Translations = {
   readyAfter: 'Sıfırlamadan sonra',
   rateError: "0'dan büyük bir değer gir.",
   dailyRateHint: 'Günde ≈ {amount}',
-  predatorsCheckboxLabel: 'İki adet seviye {level} yırtıcıyı dahil et',
+  vampireGuardCheckboxLabel: '{count} adet seviye {level} Vampir Muhafızı dahil et',
   quickObtainCheckboxLabel: '{count} Hızlı Elde Etme kullanımını dahil et',
   languageLabel: 'Dil',
   guideLinkLabel: 'Oyun Rehberleri',

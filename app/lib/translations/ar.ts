@@ -14,7 +14,7 @@ const ar: Translations = {
   readyAfter: 'بعد إعادة التعيين',
   rateError: 'أدخل معدلاً أكبر من 0.',
   dailyRateHint: '≈ {amount} في اليوم',
-  predatorsCheckboxLabel: 'تضمين اثنين من المفترسات من المستوى {level}',
+  vampireGuardCheckboxLabel: 'تضمين {count} من حراس مصاصي الدماء من المستوى {level}',
   quickObtainCheckboxLabel: 'تضمين {count} استخدامات للحصول السريع',
   languageLabel: 'اللغة',
   guideLinkLabel: 'أدلة اللعبة',
