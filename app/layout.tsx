@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Oswald } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { translations, localeDirection } from "./lib/translations";
 import { detectLocale } from "./lib/locale-server";
 import { LocaleProvider } from "./lib/locale-context";
@@ -40,6 +41,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>
+        <Analytics />
       </body>
     </html>
   );
